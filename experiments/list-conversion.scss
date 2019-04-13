@@ -1,4 +1,4 @@
-@import '../mendeleev/preflight';
+@import '../src/fn';
 
 $N: 500;
 $M: 4;
@@ -9,8 +9,8 @@ $lst: (1, 2, 3, 4);
 }
 
 @warn 'List size: #{length($lst)}';
-$lst: linked-list($lst);
+$lst: L($lst...);
 
 @for $i from 0 to $N {
-    $a: link-to-list($lst);
+    $a: lst-to-array($lst);
 }

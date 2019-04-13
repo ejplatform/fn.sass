@@ -44,12 +44,12 @@
     "node": ">=4"
   },
   "scripts": {
-    "docs": "sassdoc -t flippant fn",
+    "docs": "sassdoc -t flippant src",
     "start": "run-p lint test",
     "clean": "rimraf dist",
     "watch": "onchange src -- run-p test",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
-    "test": "sassc fn/_tests.scss || echo 'ERROR: TESTS FAILED!'",
+    "test": "sassc src/_tests.scss",
     "precommit": "run-p lint test"
   },
   "resolutions": {
