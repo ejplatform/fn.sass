@@ -9,10 +9,10 @@ sassdoc/
 playground/
 .cache/
 .idea/
-.appveyor.yml                                      
-.editorconfig                                      
-.eslint                                            
-.sasslintrc                                        
-.travis.yml                                        
-backstop.conf.js                                   
-yarn-error.log  
+.appveyor.yml
+.editorconfig
+.eslint
+.sasslintrc
+.travis.yml
+yarn-error.log
+pnpm-lock.yaml

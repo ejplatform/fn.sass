@@ -1,6 +1,6 @@
 {
   "name": "fn.sass",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Missing functional utilities for Sass.",
   "homepage": "https://fabiommendes.github.io/fn.sass/",
   "repository": "https://github.com/fabiommendes/fn.sass/",
@@ -28,16 +28,17 @@
     "test"
   ],
   "dependencies": {
-    "sassdoc": "^2.6.0"
   },
   "devDependencies": {
+    "node-sass": "^4.11.0",
+    "sassdoc": "^2.6.0",
+    "sassdoc-theme-flippant": "^0.1.0",
+    "sass-lint": "^1.12.1",
     "editorconfig-tools": "^0.1.1",
     "eslint": "^3.14.0",
     "eslint-config-styled": "^0.0.0",
     "npm-run-all": "^2.3.0",
-    "onchange": "^2.5.0",
-    "sass-lint": "^1.12.1",
-    "sassdoc-theme-flippant": "^0.1.0"
+    "onchange": "^2.5.0"
   },
   "engines": {
     "node": ">=4"

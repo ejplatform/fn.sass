@@ -1,12 +1,11 @@
-# Underscore for Sass (?)
+# fn.sass - functional programming in Sass
 
 [![Travis Status](https://travis-ci.org/fabiommendes/fn.sass.svg?branch=master)](https://travis-ci.org/fabiommendes/fn.sass?branch=master)
-[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/xcm8meymwerq0r82?svg=true)](https://ci.appveyor.com/project/cjpatoilo/fn.sass)
+[![Appveyor Status](https://ci.appveyor.com/api/projects/status/cdy3hsbe72pmte2l?svg=true)](https://ci.appveyor.com/project/fabiommendes/fn-sass)
 [![Codacy Status](https://img.shields.io/codacy/grade/848fb4bd6902434fab0bcfb5461284fe/master.svg)](https://www.codacy.com/app/fabiommendes/fn.sass/dashboard)
 [![Dependencies Status](https://david-dm.org/fabiommendes/fn.sass.svg)](https://david-dm.org/fabiommendes/fn.sass)
 [![Version Status](https://badge.fury.io/js/fn.sass.svg)](https://www.npmjs.com/package/fn.sass)
 [![Download Status](https://img.shields.io/npm/dt/fn.sass.svg)](https://www.npmjs.com/package/fn.sass)
-[![Gitter Chat](https://img.shields.io/badge/gitter-join_the_chat-4cc61e.svg)](https://gitter.im/fabiommendes/fn.sass)
 
 
 ## What is it?
@@ -20,41 +19,46 @@ CSS templating.
 
 ## Should I use it?
 
-The short answer is **no**. Sass is powerful and people had done crazy stuff
-with it <https://hugogiraudel.com/2014/01/20/json-in-sass/>`. If you really
-have to do arbitrary processing in your CSS pre-processor, fn.sass is certainly
+The short answer is **no**.
+
+Sass is more powerful than it seems and people had indeed done crazy stuff with
+it <https://hugogiraudel.com/2014/01/20/json-in-sass/>`. If you really
+need to do arbitrary processing in your CSS pre-processor, fn.sass is certainly
 of a great help and can make many things easier. If you can avoid it, please
-do so! Sass is a terrible language, and besides generating CSS, there is
+do so!
+
+Sass is a terrible general purpose language, and besides generating CSS, there is
 nothing it can do better or more efficiently that your regular Javascript,
 Python, Ruby, etc. If you can delegate work to a "real" programming language
 for the most complicated bits, by all means please do so.
 
-Don't get me wrong: Sass is excellent for its intented purpose of building CSS.
-It is just when we stretch the language outside those boundaries it starts showing
-its limits.
+Don't get me wrong. Sass is excellent for its intented use of building CSS.
+It is just when we stretch any language outside of what it was supposed to
+do, it starts showing its limits.
 
 
 ## What's up with fn.py?
 
-Perhaps my biggest grip with Sass is its list implementation. We cannot mutate
-them, yet they do not have structural sharing like the classic linked lists of
-functional languanges.
+Perhaps my biggest grip with Sass for generic programming is its list
+implementation. We cannot mutate them, yet they do not have structural sharing
+like the classic linked lists of functional languanges.
 
 This means that the naive implementation of many useful list operations such as
 mapping, filtering, etc suddenly become quadratic. To make things worst, Sass
 has 3 different types of lists that can be used interchangeably most of time
-and fail in some strange corners because they are not considered equal to each other.
+and fail in some strange corners because they are not considered to be equal to
+each other.
 
-fn.sass implements the classic "cons cell" representation of lists just like in
-LISP or any functional languange. This cons list can be mapped, filtered, reduced,
+**fn.sass** implements the classic "cons cell" representation of lists just like in
+LISP or any other functional languange. Cons lists can be mapped, filtered, reduced,
 etc.
 
 ```scss
 $xs: lst-from-array((1, 1, 2, 3, 5, 8, 13));
 
-lst-map(op-add, $xs, 1);    // add 1 to each x in list of xs.
-lst-filter(is-even, $xs);   // assuming is-even exists, keeps only even xs.
-lst-reduce(op-sum, $xs, 0); // reduce using sum, i.e., sum all  xs.
+$ys: lst-map(add, $xs, 1);      // add 1 to each x in list of xs.
+$ys: lst-filter(is-even, $xs);  // assuming is-even exists, keeps only even xs.
+$ys: lst-reduce(add, $xs, 0);   // reduce using add, i.e., sum all xs.
 // ... many more
 ```
 
@@ -68,36 +72,43 @@ utilities related to standard Sass immutable arrays, maps, strings and
 numbers. It even sports a very primitive testing framework that is exposed
 publicly and can be reused in your own projects.
 
+See the [documentation](https://fabiommendes.github.io/fn.sass/) for a complete
+list of functions.
+
 
 ### Why functional programming?
 
 Sass ocupies a strange space in language design. It uses only immutable data
 structures, which hints at functional programming, but those data structures
-are implemented in a very unefficient way. It also claims to have first class
-functions, although it does not support lambdas and closures.
+are implemented in a very unefficient way when used with standard FP idioms.
+It also claims to have first class functions, although it does not support
+lambdas and closures.
 
-The main reason for me writing this library is the unacceptable O(n^2) behavior to
-build arrays and maps on a loop. This can be avoided with extremely convoluted code, but
-the cleaner approach is to simply implement linked lists on top of Sass types.
+The main reason for this library is the unacceptable O(n^2) behavior to
+build arrays and maps on a loop. This can be avoided with extremely convoluted
+code, but the cleaner approach is perhaps to simply implement linked lists on top of
+Sass types.
 
-Linked lists lead to many functional idioms and the next thing you are thinking
-in ways to mimmick function composition and curying. Most higher order functions
-in this library accept variadic arguments that are passed to the function
-argument whenever it is used. It is almost like currying, but the caller that
-performs the partial application.
+Having linked lists opens the door to many functional idioms and the next thing
+you are thinking ways to mimmick function composition and curying. Sass does not
+support that, but most higher order functions in this library accept variadic
+arguments that are passed to the function argument whenever it is used. It is
+almost like currying, but it is the callee that performs the partial application.
 
 We saw this in action in the example above, but perhaps it was not very clear.
 Let us recapitulate:
 
 ```scss
-// standard map. apply sqrt to each x.
-lst-map(sqrt, $xs);
+// Standard map. apply sqrt to each x.
+$ys: lst-map(sqrt, $xs);
 
-// "partially apply" 2 on rhs of op-mul
-lst-map(op-mul, $xs, 2);
+// "Partially apply" 2 on rhs of mul
+// This multiply every element of $xs by 2
+$ys: lst-map(mul, $xs, 2);
 
-// convoluted equivalent of using op-rdiv in the operation above
-lst-map(lst-pipe-2, $xs, op.flip, op.div);
+// Convoluted equivalent of using rdiv in the operation above.
+// Pipes can be used to mimmick many forms of functional composition.
+$ys: lst-map(pipe-2, $xs, op.flip, op.div);
 ```
 
 
@@ -116,9 +127,9 @@ $ yarn add fn.sass
 
 ## Contributing
 
-Want to contribute? Follow these [recommendations](https://github.com/fabiommendes/fn.sass/blob/master/.github/contributing.md).
+Want to contribute? Send a PR!
 
 
 ## License
 
-Designed with ♥, blood and tears by Fábio Macêdo Mendes. Licensed under the [MIT License](LICENSE).
+Designed with ♥ and tears by Fábio Macêdo Mendes. Licensed under the [MIT License](LICENSE).
