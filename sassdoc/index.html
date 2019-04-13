@@ -1,0 +1,8039 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="&lt;p&gt;Atomic CSS framework.&lt;/p&gt;
+">
+    <link href="http://fonts.googleapis.com/css?family=Nunito:300,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,600italic,600,700,700italic,900,300italic,300,200italic,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" type="image/x-icon" href="" />
+    <title></title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+
+  <body>
+    
+<nav class="side-nav">
+  <ul class="social">
+    <li><a class="github" href="">GitHub / Install</a></li>
+    <li><a class="twitter" href="">Twitter</a></li>
+    <li><a class="gitter" href="">Gitter</a></li>
+  </ul>
+
+  <a class="logo-container" href="">
+    <img alt=" Logo" class="logo" src="">
+  </a>
+
+  <ul class="list">
+    
+      
+        
+      
+        
+          <li class="title">
+  <a href="#mixin">
+    <h3 class="type-heading">mixins</h3>
+  </a>
+</li>
+
+
+  <li><a href="#color">color</a></li>
+
+
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#luminance">luminance</a></li>
+
+  <li><a href="#contrast-ratio">contrast-ratio</a></li>
+
+  <li><a href="#choose-contrast-color">choose-contrast-color</a></li>
+
+
+        
+      
+        
+      
+      
+        
+      
+        
+      
+    
+      
+        
+      
+        
+      
+        
+          <li class="title">
+  <a href="#mixin">
+    <h3 class="type-heading">mixins</h3>
+  </a>
+</li>
+
+
+  <li><a href="#config">config</a></li>
+
+  <li><a href="#utility">utility</a></li>
+
+  <li><a href="#all-registered-utilities">all-registered-utilities</a></li>
+
+
+        
+      
+      
+        
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#get">get</a></li>
+
+  <li><a href="#register-utility">register-utility</a></li>
+
+
+        
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#variable">
+    <h3 class="type-heading">variables</h3>
+  </a>
+</li>
+
+
+  <li><a href="#config">config</a></li>
+
+  <li><a href="#config-base">config-base</a></li>
+
+  <li><a href="#mendeleev-config">mendeleev-config</a></li>
+
+
+        
+      
+        
+      
+        
+      
+    
+      
+        
+          <li class="title">
+  <a href="#mixin">
+    <h3 class="type-heading">mixins</h3>
+  </a>
+</li>
+
+
+  <li><a href="#if-given">if-given</a></li>
+
+  <li><a href="#utility-class">utility-class</a></li>
+
+
+        
+      
+      
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#contains">contains</a></li>
+
+  <li><a href="#list-apply">list-apply</a></li>
+
+  <li><a href="#list-head">list-head</a></li>
+
+  <li><a href="#list-tail">list-tail</a></li>
+
+  <li><a href="#singleton">singleton</a></li>
+
+  <li><a href="#to-list">to-list</a></li>
+
+  <li><a href="#list-reverse">list-reverse</a></li>
+
+  <li><a href="#list-multiply">list-multiply</a></li>
+
+  <li><a href="#list-add">list-add</a></li>
+
+  <li><a href="#list-cmp-filter">list-cmp-filter</a></li>
+
+  <li><a href="#list-sort">list-sort</a></li>
+
+  <li><a href="#list-reduce">list-reduce</a></li>
+
+  <li><a href="#identity">identity</a></li>
+
+  <li><a href="#first">first</a></li>
+
+  <li><a href="#second">second</a></li>
+
+  <li><a href="#cmp-gt">cmp-gt</a></li>
+
+  <li><a href="#cmp-ge">cmp-ge</a></li>
+
+  <li><a href="#cmp-lt">cmp-lt</a></li>
+
+  <li><a href="#cmp-le">cmp-le</a></li>
+
+  <li><a href="#cmp-ne">cmp-ne</a></li>
+
+  <li><a href="#cmp-eq">cmp-eq</a></li>
+
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#map-read">map-read</a></li>
+
+  <li><a href="#map-join">map-join</a></li>
+
+  <li><a href="#to-map">to-map</a></li>
+
+  <li><a href="#map-merge-nested">map-merge-nested</a></li>
+
+  <li><a href="#map-path">map-path</a></li>
+
+  <li><a href="#map-has-keys">map-has-keys</a></li>
+
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#pc">pc</a></li>
+
+  <li><a href="#pow">pow</a></li>
+
+  <li><a href="#exponential-progression">exponential-progression</a></li>
+
+  <li><a href="#sqrt">sqrt</a></li>
+
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#ends-with">ends-with</a></li>
+
+  <li><a href="#str-replace">str-replace</a></li>
+
+  <li><a href="#str-split">str-split</a></li>
+
+  <li><a href="#assert-eq">assert-eq</a></li>
+
+  <li><a href="#assert-simeq">assert-simeq</a></li>
+
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#font-property">font-property</a></li>
+
+  <li><a href="#get-typeface">get-typeface</a></li>
+
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+        
+          <li class="title">
+  <a href="#mixin">
+    <h3 class="type-heading">mixins</h3>
+  </a>
+</li>
+
+
+  <li><a href="#create-arrow">create-arrow</a></li>
+
+
+        
+      
+      
+        
+          <li class="title">
+  <a href="#function">
+    <h3 class="type-heading">functions</h3>
+  </a>
+</li>
+
+
+  <li><a href="#get-type-scale">get-type-scale</a></li>
+
+  <li><a href="#concat-selector-name">concat-selector-name</a></li>
+
+
+        
+      
+        
+      
+      
+        
+      
+        
+      
+    
+  </ul>
+</nav>
+
+
+    <div class="main-content">
+      
+  <header class="search-bar">
+    <section data-role="content-wrapper">
+      <div class="meta-data">
+        <h1>Mendeleev <span>0.1.0</span></h1>
+      </div>
+
+      <div class="search-form" data-role="search-form">
+        <input name="search" type="text" class="search-field" autocomplete="off" autofocus id="search-field" placeholder="Search documentation..." />
+        <ul class="suggestion-container"></ul>
+      </div>
+    </section>
+  </header>
+
+  <section class="main-inner">
+    
+      
+        
+      
+        
+          <h1 id="mixin" class="type-title">
+  <span data-role="content-wrapper">
+    mixins
+  </span>
+</h1>
+
+<section class="mixins">
+  
+    
+
+<article id="color" data-name="color" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#color">
+      color
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@mixin color() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Define the color and background-color properties.
+If called with a single argument, treats the color as a color name and
+assign it to the background and the contrast color to the foreground.</p>
+</p>
+
+
+      
+        
+        
+    <p>This mixin takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="luminance" data-name="luminance" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#luminance">
+      luminance
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function luminance($color) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Calculate the luminance for a color.
+See <a href="https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests">https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests</a></p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$color</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Color argument.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="contrast-ratio" data-name="contrast-ratio" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#contrast-ratio">
+      contrast-ratio
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function contrast-ratio($color, $color) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Calculate the contrast ratio between two colors.
+See <a href="https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests">https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests</a></p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$color</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Color argument.</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$color</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Color to contrast with $color</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="choose-contrast-color" data-name="choose-contrast-color" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#choose-contrast-color">
+      choose-contrast-color
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function choose-contrast-color($color, $opt1, $opt2, $bias) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Choose the color that makes a better contrast with the first argument among
+two options <code>$opt1</code> and <code>$opt2</code>.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$color</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Reference color</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$opt1</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First output option</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$opt2</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second output option</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$bias</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A factor between -1 and 1 to artificially favor $opt1 over $opt2</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+        
+      
+      
+        
+      
+        
+      
+    
+      
+        
+      
+        
+      
+        
+          <h1 id="mixin" class="type-title">
+  <span data-role="content-wrapper">
+    mixins
+  </span>
+</h1>
+
+<section class="mixins">
+  
+    
+
+<article id="config" data-name="config" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#config">
+      config
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@mixin config() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Include a configuration.</p>
+</p>
+
+
+      
+        
+        
+    <p>This mixin takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="utility" data-name="utility" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#utility">
+      utility
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@mixin utility() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Include a pre-registered utility</p>
+</p>
+
+
+      
+        
+        
+    <p>This mixin takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="all-registered-utilities" data-name="all-registered-utilities" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#all-registered-utilities">
+      all-registered-utilities
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@mixin all-registered-utilities() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Mixin that includes all registered utilities</p>
+</p>
+
+
+      
+        
+        
+    <p>This mixin takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="get" data-name="get" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#get">
+      get
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function get($path, $default, $merge) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Fetch configuration value from default config dictionary.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$path</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>List with the path to configuration</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$default</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Default result if data is not found in path.</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$merge</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>If true, assume a mapping result and merges configurations
+              from all configuration maps</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+  <section class="example">
+    <h3 class="sub-heading">Example</h3>
+
+    
+      <pre class="code language-scss"><code>get(palette black)
+// #1a1a1a</code></pre>
+      
+    </section>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="register-utility" data-name="register-utility" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#register-utility">
+      register-utility
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function register-utility() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Register utility</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+        
+      
+      
+        
+          <h1 id="variable" class="type-title">
+  <span data-role="content-wrapper">
+    variables
+  </span>
+</h1>
+
+<section class="variables">
+  
+    
+
+<article id="config" data-name="config" data-type="variable" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#config">
+      config
+    </a>
+  </h2>
+
+  
+    <span class="type-label"></span>
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    <pre class="code language-scss"><code>$config: () !default;</code></pre>
+
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Main configuration dictionary. You customize Mendeleev by setting values
+to this dictionary.</p>
+</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="config-base" data-name="config-base" data-type="variable" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#config-base">
+      config-base
+    </a>
+  </h2>
+
+  
+    <span class="type-label"></span>
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    <pre class="code language-scss"><code>$config-base: () !default;</code></pre>
+
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Configuration store that can be overridden by framework authors. Mendeleev
+searches for configuration first in <code>$config</code>, then in <code>$config-base</code>
+and finally in the internal default configuration <code>$mendeleev-config</code>.
+This dictionary is useful to override default values, while still keeping
+the user-facing <code>$config</code> map empty and easy to handle.</p>
+</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="mendeleev-config" data-name="mendeleev-config" data-type="variable" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#mendeleev-config">
+      mendeleev-config
+    </a>
+  </h2>
+
+  
+    <span class="type-label"></span>
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    <pre class="code language-scss"><code>$mendeleev-config: (
+    // TYPOGRAPHY
+    typography: (
+        // Generic
+        modules: (
+            headings: true,
+            paragraph: true,
+            scale: true,
+        ),
+        // Typefaces
+        typeface: null,
+        mono: $font-stack-ibm-plex-mono,
+        sans: $font-stack-exo,
+        serif: $font-stack-ibm-plex-serif,
+        cursive: $font-stack-system-sans,
+        // Vertical rhythm and modular scale
+        size: (
+            sm: 16,
+            md: 18,
+            lg: 20,
+        ),
+        lead: 1.5,
+        heading-lead: 1.250,
+        scale: (
+            sm: 9/8,
+            md: (9/8 + 5/4) / 2,
+            lg: 5/4,
+        ),
+        // Overridden properties
+        body: (),
+        paragraph: (),
+        headings: (
+            letter-spacing: -0.03em,
+            font-weight: 900,
+            color: $color-brand,
+        ),
+    ),
+    // COLORS
+    palette: (),
+    contrasts: (),
+    color: (),
+    // RESPONSIVE
+    breakpoints: (
+        sm: (0, 30rem),
+        md: (30rem, 48rem),
+        lg: (48rem, 60rem),
+        xl: (60rem, 9999rem),
+    ),
+    // ANIMATIONS
+    animation: (
+        duration: 300ms,
+        timing-function: ease,
+    ),
+);</code></pre>
+
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Default configuration options.
+This maps contains all default values for configurations that can be
+overridden by the <code>$config</code> or <code>$config-defaults</code> mappings.</p>
+</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+        
+      
+        
+      
+    
+      
+        
+          <h1 id="mixin" class="type-title">
+  <span data-role="content-wrapper">
+    mixins
+  </span>
+</h1>
+
+<section class="mixins">
+  
+    
+
+<article id="if-given" data-name="if-given" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#if-given">
+      if-given
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@mixin if-given($map, $default) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Include an optional set of values only if given a different value than
+default.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$map</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A map with property names and values</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$default</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Optional value or list of values to omit.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="utility-class" data-name="utility-class" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#utility-class">
+      utility-class
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@mixin utility-class($name, $props) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Create a utility class setting all properties defined in a map.</p>
+<p>The example bellow creates 3 different classes: the <code>.uppercase</code> and
+<code>%uppercase-important</code> sets all properties with !important, while the third
+<code>%uppercase</code> does not use !important.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$name</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>name of the utility class</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$props</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>mapping with the properties defined by this utility</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+  <section class="example">
+    <h3 class="sub-heading">Example</h3>
+
+    
+      <pre class="code language-scss"><h4 class="description"><p>Create a utility class.</p>
+</h4><code>@include utility-class(uppercase, (text-transform: uppercase))</code></pre>
+      
+    </section>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="contains" data-name="contains" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#contains">
+      contains
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function contains($list, $value) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if list contains value.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$list</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-apply" data-name="list-apply" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-apply">
+      list-apply
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-apply($lst, $function) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Map function to list.
+Function handlers in Sass are obtained by using the <code>get-function(function-name)</code>
+function.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>The input list.</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$function</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A handler to a function or function name.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-head" data-name="list-head" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-head">
+      list-head
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-head($lst) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return the first element of a list</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-tail" data-name="list-tail" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-tail">
+      list-tail
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-tail($lst) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return a new list with the first element removed</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="singleton" data-name="singleton" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#singleton">
+      singleton
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function singleton() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return a singleton list</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="to-list" data-name="to-list" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#to-list">
+      to-list
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function to-list($value, $keep) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Convert value to list.
+Lists are returned as-is, maps become list of 2-tuples and other elements
+become a list with a single value</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>object to be converted</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$keep</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>can be &#39;keys&#39;, &#39;values&#39; or &#39;both&#39; (default). It affects conversion of maps.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-reverse" data-name="list-reverse" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-reverse">
+      list-reverse
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function list-reverse() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Reverse a list</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-multiply" data-name="list-multiply" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-multiply">
+      list-multiply
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-multiply($lst, $value) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Multiply each element of list by value</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>input list</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>value used to multiply each element in list</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-add" data-name="list-add" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-add">
+      list-add
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-add($lst, $value) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Add each element of list to value</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>input list</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>value used to add each element in list</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-cmp-filter" data-name="list-cmp-filter" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-cmp-filter">
+      list-cmp-filter
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-cmp-filter($lst, $value, $op, $key) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Filter list keeping only the elements that compare positively with the
+given value.</p>
+<p>Obs: You probably will want to use one of the functions defined in this
+library like cmp-eq, cmp-gt, cmp-lt, etc.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Input list</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Reference value</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$op</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Name of function that performs the comparison.</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$key</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Optional function that is applied to all elements before comparison.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-sort" data-name="list-sort" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-sort">
+      list-sort
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function list-sort($lst, $key) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Sort list</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$lst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Value</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$key</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Function</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="list-reduce" data-name="list-reduce" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#list-reduce">
+      list-reduce
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function list-reduce() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Reduce list by function</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="identity" data-name="identity" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#identity">
+      identity
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function identity() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return its argument</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="first" data-name="first" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#first">
+      first
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function first() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return first element of a list</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="second" data-name="second" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#second">
+      second
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function second() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return second element of a list</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-gt" data-name="cmp-gt" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-gt">
+      cmp-gt
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-gt($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a &gt; $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-ge" data-name="cmp-ge" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-ge">
+      cmp-ge
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-ge($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a &gt;= $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-lt" data-name="cmp-lt" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-lt">
+      cmp-lt
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-lt($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a &lt; $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-le" data-name="cmp-le" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-le">
+      cmp-le
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-le($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a &lt;= $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-ne" data-name="cmp-ne" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-ne">
+      cmp-ne
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-ne($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a != $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="cmp-eq" data-name="cmp-eq" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#cmp-eq">
+      cmp-eq
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function cmp-eq($a, $b) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $a == $b</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$a</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$b</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="map-read" data-name="map-read" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#map-read">
+      map-read
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function map-read($map, $key, $default) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return value if key exists on map, otherwise return default.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$map</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>map to operate from</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$key</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>key</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$default</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>default value. If not given and key not present, issue an error;</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="map-join" data-name="map-join" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#map-join">
+      map-join
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function map-join($maps) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Join a list of maps together. Entries in later maps override previously
+defined values.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$maps</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>a list of maps</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="to-map" data-name="to-map" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#to-map">
+      to-map
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function to-map($obj) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Convert argument to map.  Works for lists of tuples and maps.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$obj</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A map or list object.</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="map-merge-nested" data-name="map-merge-nested" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#map-merge-nested">
+      map-merge-nested
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function map-merge-nested($map1, $map2) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Merge two maps up to one level of nesting.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$map1</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$map2</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+  <section class="example">
+    <h3 class="sub-heading">Example</h3>
+
+    
+      <pre class="code language-scss"><code>map-merge-nested((foo: (x: 1, y: 3)),
+                 (foo: (y: 2, z: 3), bar: baz));
+// (foo: (x: 1, y: 2, z: 3), bar: baz)</code></pre>
+      
+    </section>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="map-path" data-name="map-path" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#map-path">
+      map-path
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function map-path($map, $key, $default) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Fetch value in key traversing nested maps if key is a list.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$map</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>a map to extract the value from</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$key</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>value or list of values for nested keys</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$default</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>fallback value if key is not present</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="map-has-keys" data-name="map-has-keys" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#map-has-keys">
+      map-has-keys
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function map-has-keys() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if map has all keys in the list</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="pc" data-name="pc" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#pc">
+      pc
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function pc($value) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Convert argument to percentage.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A number input</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="pow" data-name="pow" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#pow">
+      pow
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function pow($value, $n) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Raise value to integer power.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$value</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>A number input</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$n</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Exponent</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="exponential-progression" data-name="exponential-progression" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#exponential-progression">
+      exponential-progression
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function exponential-progression($ratio, $size, $initial) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return a list with an exponential progression of numbers forming a given
+ ratio.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$ratio</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Ratio between two successive numbers</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$size</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Size of the resulting list</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$initial</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Initial value (defaults to 1)</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="sqrt" data-name="sqrt" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#sqrt">
+      sqrt
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function sqrt($x) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Computes the square root of a number using the babylonian method.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$x</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Input</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="ends-with" data-name="ends-with" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#ends-with">
+      ends-with
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function ends-with($string, $end) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return true if $string ends with $end</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$string</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$end</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>No description available.</p>
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="str-replace" data-name="str-replace" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#str-replace">
+      str-replace
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function str-replace($string, $search, $replace) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Replace <code>$search</code> with <code>$replace</code> in <code>$string</code></p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$string</code>
+      <ul class="meta">
+        <span class="type-label">String</span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Initial string</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$search</code>
+      <ul class="meta">
+        <span class="type-label">String</span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Substring to replace</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$replace</code>
+      <ul class="meta">
+        <span class="type-label">String</span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>(&#39;&#39;) - New value</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+  <h3 class="sub-heading">Returns</h3>
+  <p class="item-description"><p>Updated string</p>
+
+  
+    String
+  
+  </p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="str-split" data-name="str-split" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#str-split">
+      str-split
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function str-split($string, $sep) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Split string into separator and return a list of strings</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$string</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Initial string</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$sep</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Separator</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="assert-eq" data-name="assert-eq" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#assert-eq">
+      assert-eq
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function assert-eq($fst, $snd, $msg) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Assert equality on unit tests</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$fst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$snd</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$msg</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Optional message</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+  <section class="example">
+    <h3 class="sub-heading">Example</h3>
+
+    
+      <pre class="code language-scss"><code>$do: assert-eq(join(hello, world), hello world);</code></pre>
+      
+    </section>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="assert-simeq" data-name="assert-simeq" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#assert-simeq">
+      assert-simeq
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function assert-simeq($fst, $snd, $tol, $msg) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Assert approximate numerical equality</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$fst</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>First argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$snd</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Second argument</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$tol</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Maximum tolerance</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$msg</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Optional message</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+  <section class="example">
+    <h3 class="sub-heading">Example</h3>
+
+    
+      <pre class="code language-scss"><code>$do: assert-eq(join(hello, world), hello world);</code></pre>
+      
+    </section>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="font-property" data-name="font-property" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#font-property">
+      font-property
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@function font-property($prop, $which) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return a font property like family, line-height, letter-spacing, size,
+transform, or weight.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$prop</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Property name</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$which</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>If given, must be either headings or paragraph and denotes
+              which section to look for the property</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="get-typeface" data-name="get-typeface" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#get-typeface">
+      get-typeface
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function get-typeface() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return the default typeface</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+      
+    
+      
+        
+      
+        
+          <h1 id="mixin" class="type-title">
+  <span data-role="content-wrapper">
+    mixins
+  </span>
+</h1>
+
+<section class="mixins">
+  
+    
+
+<article id="create-arrow" data-name="create-arrow" data-type="mixin" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#create-arrow">
+      create-arrow
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+      
+
+      
+
+      
+
+      
+        
+      
+    
+    <pre class="code language-scss"><code>@mixin create-arrow($direction, $size, $color) { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Mixin that decorates a given element to shape it as a triangular arrow.</p>
+</p>
+
+
+      
+        
+        
+  <h3 class="sub-heading">Parameters</h3>
+  <dl class="parameters">
+  
+    <dt class="parameter">
+      <code class="name">$direction</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>One of up, down, left, right</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$size</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Size of the arrow element</p>
+
+      </div>
+    </dd>
+  
+    <dt class="parameter">
+      <code class="name">$color</code>
+      <ul class="meta">
+        <span class="type-label"></span>
+        
+          <span class="required-label">Required</span>
+        
+      </ul>
+    </dt>
+    <dd class="parameter-definition">
+      <div class="description">
+        <p>Color of the arrow element</p>
+
+      </div>
+    </dd>
+  
+  </dl>
+  
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+      
+        
+          <h1 id="function" class="type-title">
+  <span data-role="content-wrapper">
+    functions
+  </span>
+</h1>
+
+<section class="functions">
+  
+    
+
+<article id="get-type-scale" data-name="get-type-scale" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#get-type-scale">
+      get-type-scale
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function get-type-scale() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Return a type scale mapping from the argument.</p>
+<p>If argument is a number provides a ratio-based scale.
+If argument is a list, convert to a map with the progression:
+(&#39;1&#39;: first, &#39;2&#39;: second, &#39;3&#39;: third, ...etc)
+Argument can be one of the pre-defined type scales: very-narrow, narrow, medium, wide, very-wide.</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+    
+
+<article id="concat-selector-name" data-name="concat-selector-name" data-type="function" class="item"
+  
+  >
+  <div data-role="content-wrapper">
+    <header class="title-bar">
+  <h2 class="item-title">
+    <a href="#concat-selector-name">
+      concat-selector-name
+    </a>
+  </h2>
+
+  
+
+  <div class="metadata">
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+</header>
+
+    <div class="declaration">
+  
+    
+    
+    <pre class="code language-scss"><code>@function concat-selector-name() { ... }</code></pre>
+  
+</div>
+
+
+    
+      
+        
+        
+  <p><p>Concatenate a string or list.
+If first argument is a list, makes a elementwise concatenation with second
+and return a comma separated list.
+This function is useful to create selectors in mixins.</p>
+</p>
+
+
+      
+        
+        
+    <p>This function takes no parameters.</p>
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+
+
+
+      
+        
+        
+
+      
+        
+        
+
+      
+        
+        
+
+      
+    
+  </div>
+</article>
+
+  
+</section>
+
+        
+      
+        
+      
+      
+        
+      
+        
+      
+    
+    <footer class="footer">
+      <div data-role="content-wrapper" id="footer">
+  <a href=""><img class="footer-logo" src=""/></a>
+
+  <p>Neat is maintained and funded by <a href=""></a>.</p>
+  <p>Documentation generated using <a href="http://sassdoc.com/">SassDoc</a>.</p>
+  <p>The names and logos are trademarks of  © <span id="year"></span></p>
+</div>
+
+    </footer>
+  </section>
+
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="assets/vendor/waypoints.min.js"></script>
+<script src="assets/vendor/fuse.min.js"></script>
+<script src="assets/vendor/ticker.js"></script>
+<script src="assets/vendor/highlight.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '']);
+    _gaq.push(['_setDomainName', '']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+
+  </body>
+</html>
