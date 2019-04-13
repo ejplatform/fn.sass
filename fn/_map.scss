@@ -1,0 +1,179 @@
+////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS THAT OPERATE ON BASIC SASS DATATYPES
+/// @group map functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+@import 'array';
+
+$_fn-map-not-given: unique-id() !default;
+
+/// Return value if key exists on map, otherwise return default.
+///
+/// @arg $map - map to operate from
+/// @arg $key - key
+/// @arg $default - default value. If not given and key not present, issue an error;
+@function map-read($map, $key, $default: $_fn-map-not-given) {
+    @if map-has-key($map, $key) {
+        @return map-get($map, $key);
+    } @else if $default != $_fn-map-not-given {
+        @return $default
+    } @else {
+        @error 'Key not present in map: #{$key}';
+    }
+}
+
+/// Join a list of maps together. Entries in later maps override previously
+/// defined values.
+///
+/// @arg $maps - a list of maps
+@function map-join($maps) {
+    $result: ();
+    @each $map in $maps {
+        $result: map-merge($result, $map);
+    }
+    @return $result;
+}
+
+/// Convert argument to map. Works for lists of 2-tuples and maps.
+///
+/// @arg $obj - A map or list object.
+@function to-map($obj) {
+    @if type-of($obj) == list {
+        $result: ();
+        @each $k, $v in $obj {
+            $result: map-merge($result, ($k: $v))
+        }
+        @return $result
+    } @else if (type-of($obj) == map) {
+        @return $obj;
+    } @else {
+        @error "Cannot convert argument to map."
+    }
+}
+
+/// Merge two maps up to one level of nesting.
+/// @arg $map1
+/// @arg $map2
+///
+/// @example scss
+///     map-merge-nested((foo: (x: 1, y: 3)),
+///                      (foo: (y: 2, z: 3), bar: baz));
+///     // (foo: (x: 1, y: 2, z: 3), bar: baz)
+@function map-merge-nested($map1, $map2) {
+    $map-fields-merged: ();
+    $result: map-merge($map1, $map2);
+
+    // Merge sub-maps from map1
+    @each $key, $value in $map1 {
+        @if type-of($value) == map and map-has-key($map2, $key) {
+            $value: map-merge($value, map-get($map2, $key));
+            $result: map-merge($result, ($key: $value));
+        }
+    }
+    @return $result;
+}
+
+/// Fetch value in key traversing nested maps if key is a list.
+/// @arg $map - a map to extract the value from
+/// @arg $key - value or list of values for nested keys
+/// @arg $default - fallback value if key is not present
+@function map-path($map, $key, $default: $_fn-map-not-given) {
+    @if type-of($key) == list {
+        @while length($key) > 0 {
+            @if map-has-key($map, nth($key, 1)) {
+                $map: map-get($map, nth($key, 1));
+                $key: list-tail($key);
+            } @else if $default == $_fn-map-not-given {
+                @error 'Path not found in map: #{$key}'
+            } @else {
+                @return $default;
+            }
+        }
+        @return $map;
+    } @else {
+        @return map-read($map, $key, $default);
+    }
+}
+
+/// Return true if map has all keys in the list
+@function map-has-keys($map, $keys) {
+    @each $key in $keys {
+        @if not map-has-key($map, $key) {
+            @return false;
+        }
+    }
+    @return true;
+}
+
+/// Keep only the given keys on map
+@function map-select($map, $keys) {
+    $result: ();
+    @each $key in $keys {
+        @if map-has-key($map, $key) {
+            $result: map-merge($result, ($key: map-get($map, $key)));
+        }
+    }
+    @return $result;
+}
+
+/// Remove the given keys from map
+@function map-exclude($map, $keys) {
+    $result: $map;
+    @each $key in $keys {
+        $result: map-remove($result, $key);
+    }
+    @return $result;
+}
+
+/// Select first element that matches a list of key or return the given default
+///
+/// @arg $map - map to operate from
+/// @arg $key - key
+/// @arg $default - default value. If not given and key not present, issue an error;
+@function map-get-first($map, $keys, $default: $_fn-map-not-given) {
+    @each $key in $keys {
+        @if map-has-key($map, $key) {
+            @return map-get($map, $key);
+        }
+    }
+    @if $default != $_fn-map-not-given {
+        @return $default
+    } @else {
+        @error 'Key not present in map: #{$keys}';
+    }
+}
+
+/// Filter map to include only items in which the value passes a predicate
+///
+/// @arg $map - Input map
+/// @arg $pred - Function or name of boolean function that is used to filter items.
+@function map-filter-values($map, $pred) {
+    $pred: as-func($pred);
+    $result: ();
+    @each $key, $value in $map {
+        @if call($pred, $value) {
+            $result: map-merge($result, ($key: $value));
+        }
+    }
+    @return $result;
+}
+
+/// Apply function to all values in map
+///
+/// @arg $map - Input map
+/// @arg $func - Transform
+@function map-apply-values($map, $func) {
+    $func: as-func($func);
+    $result: ();
+    @each $key, $value in $map {
+        $result: map-merge($result, ($key: call($func, $value)));
+    }
+    @return $result;
+}
+
+//------------------------------------------------------------------------------
+// Auxiliary non-api functions
+//------------------------------------------------------------------------------
+@function _map-get2($map, $key1, $key2) {
+    @return map-get(map-get($map, $key1), $key2);
+}
