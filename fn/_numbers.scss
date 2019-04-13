@@ -1,0 +1,123 @@
+////
+/// NUMBER FUNCTIONS
+/// @group numeric functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+@import 'list';
+
+/// Convert argument to percentage.
+/// @arg $value - A number input
+@function pc($value) {
+    @if unit($value) == '' {
+        @return $value * 100%;
+    } @else if unit($value) == '%' {
+        @return $value;
+    } @else {
+        @error 'Cannot convert #{unit($value)} to percent.';
+    }
+}
+
+/// Raise value to integer power.
+/// @arg $value - A number input
+/// @arg $n - Exponent
+@function pow($value, $n) {
+    $result: 1;
+    @if $n > 0 {
+        @for $i from 1 through $n {
+            $result: $result * $value;
+        }
+    } @else if $n < 0 {
+        $n: -$n;
+        @for $i from 1 through $n {
+            $result: $result / $value;
+        }
+    }
+    @return $result;
+}
+
+/// Return a (linked-)list with an exponential progression of numbers forming
+/// the given ratio.
+///
+/// @arg $ratio - Ratio between two successive numbers
+/// @arg $size - Size of the resulting list
+/// @arg $initial - Initial value (defaults to 1)
+@function exponential-progression($ratio, $size, $init: 1, $reverse: false) {
+    $xs: ($init null);
+    @for $i from 1 to $size {
+        $init: $init * $ratio;
+        $xs: ($init $xs);
+    }
+    @return if($reverse, $xs, lst-reverse($xs));
+}
+
+/// Computes the square root of a number using the Babylonian/Newton's method.
+@function sqrt($x) {
+    @if $x < 0 {
+        @error 'Cannot compute the square root of a negative number';
+    }
+    $sqrt: 1;
+    @while abs($sqrt * $sqrt - $x) > 0.0000001 {
+        $sqrt: 0.5 * ($sqrt + $x / $sqrt);
+    }
+    @return $sqrt;
+}
+
+/// Return -1, 0 or 1 according with the sign of a numerical input.
+@function sign($x) {
+    @if $x > 0 {
+        @return 1;
+    } @else {
+        @return if($x == 0, 0, -1);
+    }
+}
+
+/// Convert value to number
+/// See: https://www.sassmeister.com/gist/9fa19d254864f33d4a80
+///
+/// @author Hugo Giraudel
+/// @arg $value - Input string
+@function to-number($value) {
+    @if type-of($value) == 'number' {
+        @return $value;
+    } @else if type-of($value) != 'string' {
+        @error 'Value for `to-number` should be a number or a string.';
+    }
+
+    $result: 0;
+    $digits: 0;
+    $minus: str-slice($value, 1, 1) == '-';
+    $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
+
+    @for $i from if($minus, 2, 1) through str-length($value) {
+        $character: str-slice($value, $i, $i);
+
+        @if not (index(map-keys($numbers), $character) or $character == '.') {
+            @return to-number(if($minus, -$result, $result), str-slice($value, $i))
+        }
+        @if $character == '.' {
+            $digits: 1;
+        } @else if $digits == 0 {
+            $result: $result * 10 + map-get($numbers, $character);
+        } @else {
+            $digits: $digits * 10;
+            $result: $result + map-get($numbers, $character) / $digits;
+        }
+    }
+    @return if($minus, -$result, $result);
+}
+
+/// Add `$unit` to `$value`
+///
+/// @author Hugo Giraudel
+/// @arg $value - Value to add unit to
+/// @arg $unit - String representation of the unit
+@function to-length($value, $unit) {
+    $units: (
+        'px': 1px, 'cm': 1cm, 'mm': 1mm, '%': 1%, 'ch': 1ch, 'pc': 1pc,
+        'in': 1in, 'em': 1em, 'rem': 1rem, 'pt': 1pt, 'ex': 1ex, 'vw': 1vw,
+        'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax);
+    @if not index(map-keys($units), $unit) {
+        @error 'Invalid unit `#{$unit}`.';
+    }
+    @return $value * map-get($units, $unit);
+}
