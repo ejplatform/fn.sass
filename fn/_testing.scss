@@ -1,0 +1,34 @@
+////////////////////////////////////////////////////////////////////////////////
+/// TESTING FUNCTIONS
+/// @group string functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+
+/// Assert equality on unit tests
+///
+/// @arg $fst - First argument
+/// @arg $snd - Second argument
+/// @arg $msg - Optional message
+/// @example scss
+///     $do: assert-eq(join(hello, world), hello world);
+@function assert-eq($fst, $snd, $msg: 'Assertion error') {
+    @if $fst != $snd {
+        @error '#{$msg}: expect "#{inspect($snd)}", but got "#{inspect($fst)}".';
+    }
+    @return $fst;
+}
+
+/// Assert approximate numerical equality
+///
+/// @arg $fst - First argument
+/// @arg $snd - Second argument
+/// @arg $tol - Maximum tolerance
+/// @arg $msg - Optional message
+/// @example scss
+///     $do: assert-eq(join(hello, world), hello world);
+@function assert-simeq($fst, $snd, $tol: 0.000001, $msg: 'Assertion error') {
+    @if abs($fst - $snd) > $tol {
+        @error '#{$msg}: expect "#{inspect($snd)}", but got "#{inspect($fst)}".';
+    }
+    @return $fst;
+}

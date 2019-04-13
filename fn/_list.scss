@@ -1,0 +1,493 @@
+////////////////////////////////////////////////////////////////////////////////
+/// LINKED LISTS
+/// @group linked list
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+@import 'functions';
+
+$_fn-list-not-given: unique-id() !default;
+
+// BASIC -----------------------------------------------------------------------
+
+/// Returns head element of linked list
+@function car($xs) {
+    @return nth($xs, 1);
+}
+
+/// Returns tail element of linked list
+@function cdr($xs) {
+    @return nth($xs, 2);
+}
+
+/// Construct list
+@function cons($x, $tail: null) {
+    @return ($x $tail);
+}
+
+/// Return list length
+@function lst-length($xs) {
+    @return if($xs == null, 0, 1 + lst-length(cdr($xs)));
+}
+
+/// Return the n-th element of xs
+@function lst-nth($xs, $n) {
+    @if $xs == null {
+        @error "List do not have that many elements."
+    }
+    @return if($n == 1, car($xs), lst-nth(cdr($xs), $n - 1));
+}
+
+/// Return the position of value in xs.
+@function lst-index($xs, $value) {
+    $idx: 0;
+    @while $xs != null {
+        $idx: $idx + 1;
+        $x: car($xs);
+        $xs: cdr($xs);
+        @if $x == $value {
+            @return $idx;
+        }
+    }
+    @return null;
+}
+
+/// Return true if list contains value
+@function lst-contains($xs, $value) {
+    @return lst-index($xs, $value) != null;
+}
+
+/// Coerce element to list
+@function as-lst($xs) {
+    // $xs: to-list($xs);
+    @return $xs;
+}
+
+// JOINING AND MERGING LISTS ---------------------------------------------------
+
+/// Reverse linked list
+@function lst-reverse($xs) {
+    $xs: as-lst($xs);
+    $ys: null;
+    @while $xs != null {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        $ys: ($x $ys);
+    }
+    @return $ys;
+}
+
+/// Zip two lists together and return a list of tuples.
+@function lst-zip($xs, $ys) {
+    @if $xs != null and $ys != null {
+        @return ((car($xs) car($ys)) lst-zip(cdr($xs), cdr($ys)));
+    }
+    @return null;
+}
+
+/// Create a list with reversed elements of xs followed by ys.
+@function lst-stitch($xs, $ys) {
+    @return if($xs == null, $ys, lst-stitch(cdr($xs), (car($xs) $ys)));
+}
+
+/// Create a list with xs followed by ys.
+@function lst-join($xs, $ys) {
+    @return lst-stitch(lst-reverse($xs), $ys);
+}
+
+/// Append an array of lists together
+@function lst-concat($lists) {
+    $xs: nth($lists, length($lists));
+    @for $i from length($lists) - 1 through 1 {
+        $xs: lst-join(nth($lists, $i), $xs);
+    }
+    @return $xs;
+}
+
+/// Intersperse value between xs
+@function lst-intersperse($value, $xs) {
+    $xs: as-lst($xs);
+    @if $xs == null {
+        @return null;
+    }
+    $x: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @return if($xs == null, ($x null), ($x ($value lst-intersperse($value, $xs))));
+}
+
+// CREATION --------------------------------------------------------------------
+
+/// Create list with n repetition of given element
+@function lst-repeat($x, $n: 1) {
+    $ys: null;
+    @while $n > 0 {
+        $ys: ($x $ys);
+        $n: $n - 1;
+    }
+    @return $ys;
+}
+
+/// Return a range of numbers from $a to $b (inclusive)
+@function lst-range($a, $b, $step: 1) {
+    @if $b < $a {
+        @return lst-range($b, $a, -$step);
+    }
+
+    $ys: null;
+    @while $a <= $b {
+        $ys: ($a $ys);
+        $a: $a + $step;
+    }
+    @return lst-reverse($ys);
+}
+
+// TRANSFORMATIONS -------------------------------------------------------------
+
+/// Map function to each element of list.
+///
+/// Any additional arguments are passed to the function during function
+/// application.
+@function lst-map($fn, $xs, $args...) {
+    $xs: as-lst($xs);
+    $ys: null;
+    $fn: as-func($fn);
+    @while $xs != null {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        $ys: (call($fn, $x, $args...) $ys);
+    }
+    @return lst-reverse($ys);
+}
+
+/// Map function to each element of list and the respective index
+///
+/// Any additional arguments are passed to the function during function
+/// application.
+@function lst-index-map($fn, $xs, $args...) {
+    $xs: as-lst($xs);
+    $ys: null;
+    $fn: as-func($fn);
+    $idx: 1;
+    @while $xs != null {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        $ys: (call($fn, $idx, $x, $args...) $ys);
+        $idx: $idx + 1;
+    }
+    @return lst-reverse($ys);
+}
+
+/// Filter list by predicate function
+///
+/// Any additional arguments are passed to the function during function
+/// application.
+@function lst-filter($pred, $xs, $args...) {
+    $xs: as-lst($xs);
+    $ys: null;
+    $pred: as-func($pred);
+    @while $xs != null {
+        $x: car($xs);
+        $xs: cdr($xs);
+        @if call($pred, $x, $args...) {
+            $ys: ($x $ys);
+        }
+    }
+    @return $ys;
+}
+
+/// Return 2 lists, with elements separated by predicate function
+///
+/// Any additional arguments are passed to the function during function
+/// application.
+@function lst-separate($pred, $xs, $args...) {
+    $xs: as-lst($xs);
+    $left: null;
+    $right: null;
+    $pred: as-func($pred);
+    @while $xs != null {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        @if call($pred, $x, $args...) {
+            $left: ($x $left);
+        } @else {
+            $right: ($x $right);
+        }
+    }
+    @return (lst-reverse($left) lst-reverse($right));
+}
+
+/// Drop the first n elements of list
+@function lst-drop($n, $xs) {
+    $xs: as-lst($xs);
+    @if $n <= 0 or $xs == null {
+        @return $xs;
+    }
+    @return lst-drop($n - 1, cdr($xs));
+}
+
+/// Keep at most the first n elements of list
+@function lst-take($n, $xs) {
+    $xs: as-lst($xs);
+    @if $n <= 0 or $xs == null {
+        @return null;
+    }
+    @return (car($xs) lst-take($n - 1, cdr($xs)));
+}
+
+/// Quick sort algorithm
+@function lst-sort($xs) {
+    $xs: as-lst($xs);
+    @if $xs == null {
+        @return null;
+    }
+    $x: car($xs);
+    $xs: cdr($xs);
+    $pair: lst-separate(op-lt, $xs, $x);
+    @return lst-join(lst-sort(car($pair)), ($x lst-sort(cdr($pair))));
+}
+
+/// Iterate in chunks of size n.
+@function lst-chunks($xs, $n) {
+    $xs: as-lst($xs);
+    $chunk: null;
+    @for $i from 1 through $n {
+        @if $xs != null {
+            $x: car($xs);
+            $xs: cdr($xs);
+            $chunk: ($x $chunk);
+        }
+    }
+    @return if($chunk == null, null, (lst-reverse($chunk) lst-chunks($xs, $n)));
+}
+
+// FOLDS -----------------------------------------------------------------------
+
+/// Reduce non-empty list by function.
+@function lst-reduce($fn, $xs, $init: $_fn-list-not-given, $args...) {
+    $xs: as-lst($xs);
+    @if $init== $_fn-list-not-given {
+        @if $xs == null {
+            @error "Cannot reduce an empty list";
+        } @else {
+            $init: car($xs);
+            $xs: cdr($xs);
+        }
+    }
+    $fn: as-func($fn);
+    @while $xs != null {
+        $init: call($fn, car($xs), $init, $args...);
+        $xs: cdr($xs);
+    }
+    @return $init;
+}
+
+/// Sum all elements of list.
+@function lst-sum($xs) {
+    $xs: as-lst($xs);
+    @return lst-reduce(op-add, $xs, 0);
+}
+
+/// Multiply all elements of list.
+@function lst-prod($xs) {
+    $xs: as-lst($xs);
+    @return lst-reduce(op-mul, $xs, 1);
+}
+
+/// True if all elements are true.
+@function lst-all($xs) {
+    $xs: as-lst($xs);
+    @if $xs == null {
+        @return true;
+    }
+    @return if(car($xs), lst-all(cdr($xs)), false);
+}
+
+/// True if any element is true.
+@function lst-any($xs) {
+    $xs: as-lst($xs);
+    @if $xs == null {
+        @return false;
+    }
+    @return if(car($xs), true, lst-any(cdr($xs)));
+}
+
+/// Return true if some elements pass predicate.
+@function lst-some($pred, $xs, $args...) {
+    $xs: as-lst($xs);
+    $pred: as-func($pred);
+    @while $xs != null {
+        $x: car($xs);
+        $xs: cdr($xs);
+        @if call($pred, $x, $args...) {
+            @return true;
+        }
+    }
+    @return false;
+}
+
+/// Return true if all elements pass predicate.
+@function lst-every($pred, $xs, $args...) {
+    $xs: as-lst($xs);
+    $pred: as-func($pred);
+    @while $xs != null {
+        $x: car($xs);
+        $xs: cdr($xs);
+        @if not call($pred, $x, $args...) {
+            @return false;
+        }
+    }
+    @return true;
+}
+
+/// Return maximum value in list
+@function lst-max($xs) {
+    $x: car($xs);
+    $xs: cdr($xs);
+    $y: if($xs == null, $x, lst-max($xs));
+    @return if($x > $y, $x, $y);
+}
+
+/// Return minimum value in list
+@function lst-min($xs) {
+    $x: car($xs);
+    $xs: cdr($xs);
+    $y: if($xs == null, $x, lst-min($xs));
+    @return if($x < $y, $x, $y);
+}
+
+/// Generalized join
+@function lst-join-by($fn, $empty, $xs) {
+    $xs: as-lst($xs);
+    $fn: as-func($fn);
+    @if $xs == null {
+        @return $empty;
+    }
+    @while cdr($xs) != null {
+        $ys: null;
+        $chunks: lst-chunks($xs, 2);
+        @while $chunks != null {
+            $pair: car($chunks);
+            $chunks: cdr($chunks);
+            $a: car($pair);
+            $b: cdr($pair);
+            $b: if($b == null, null, car($b));
+            $ys: (call($fn, $a, $b or $empty) $ys);
+        }
+        $xs: $ys;
+    }
+    @return car($xs);
+}
+
+// CONVERSIONS -----------------------------------------------------------------
+
+/// Create linked list from standard lists/array
+@function lst-from-array($arr) {
+    $xs: null;
+    @each $x in $arr {
+        $xs: ($x $xs);
+    }
+    @return lst-reverse($xs);
+}
+
+/// Create linked list from map
+@function lst-from-map($map) {
+    $xs: null;
+    @each $x, $y in $map {
+        $xs: (($x $y) $xs);
+    }
+    @return lst-reverse($xs);
+}
+
+/// Transform linked list into standard list
+@function lst-to-array($xs) {
+    @if $xs == null {
+        @return ();
+    }
+
+    // Collect partial sub-arrays
+    $partials: ();
+    @while $xs != null {
+        $arr: (nth($xs, 1),);
+        $xs: nth($xs, 2);
+        @if $xs != null {
+            $arr: append($arr, nth($xs, 1));
+            $xs: nth($xs, 2);
+            @if $xs != null {
+                $arr: append($arr, nth($xs, 1));
+                $xs: nth($xs, 2);
+                @if $xs != null {
+                    $arr: append($arr, nth($xs, 1));
+                    $xs: nth($xs, 2);
+                    @if $xs != null {
+                        $arr: append($arr, nth($xs, 1));
+                        $xs: nth($xs, 2);
+                    }
+                }
+            }
+        }
+        $partials: append($partials, $arr);
+    }
+
+    // Join partials
+    @while length($partials) > 1 {
+        $new-partials: ();
+        @for $i from 0 to floor(length($partials) / 2) {
+            $j: 2 * $i + 1;
+            $a: nth($partials, $j);
+            $b: nth($partials, $j + 1);
+            $new-partials: append($new-partials, join($a, $b));
+        }
+        $partials: $new-partials;
+    }
+    @return nth($partials, 1);
+}
+
+/// Transform linked list of pairs of values into a map
+@function lst-to-map($xs) {
+    @if $xs == null {
+        @return ();
+    }
+
+    // Collect partial sub-arrays
+    $partials: ();
+    @while $xs != null {
+        $item: nth($xs, 1);
+        $arr: (nth($item, 1): nth($item, 2));
+        $xs: nth($xs, 2);
+        @if $xs != null {
+            $item: nth($xs, 1);
+            $arr: map-merge($arr, (nth($item, 1): nth($item, 2)));
+            $xs: nth($xs, 2);
+            @if $xs != null {
+                $item: nth($xs, 1);
+                $arr: map-merge($arr, (nth($item, 1): nth($item, 2)));
+                $xs: nth($xs, 2);
+                @if $xs != null {
+                    $item: nth($xs, 1);
+                    $arr: map-merge($arr, (nth($item, 1): nth($item, 2)));
+                    $xs: nth($xs, 2);
+                    @if $xs != null {
+                        $item: nth($xs, 1);
+                        $arr: map-merge($arr, (nth($item, 1): nth($item, 2)));
+                        $xs: nth($xs, 2);
+                    }
+                }
+            }
+        }
+        $partials: append($partials, $arr);
+    }
+
+    // Join partials
+    @while length($partials) > 1 {
+        $new-partials: ();
+        @for $i from 0 to floor(length($partials) / 2) {
+            $j: 2 * $i + 1;
+            $a: nth($partials, $j);
+            $b: nth($partials, $j + 1);
+            $new-partials: append($new-partials, map-merge($a, $b));
+        }
+        $partials: $new-partials;
+    }
+    @return nth($partials, 1);
+}
+
+
