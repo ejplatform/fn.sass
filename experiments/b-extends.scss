@@ -1,0 +1,36 @@
+$COLORS: (red black, white black, black white, green blue);
+$WIDTHS: (0, 10, 25, 50, 75, 90, 100);
+$HEIGHTS: (0, 50, 100);
+
+@each $fg, $bg in $COLORS {
+    %base-#{inspect($fg)}-#{inspect($bg)} {
+        color: $fg;
+        background-color: $bg;
+    }
+}
+
+@each $value in $WIDTHS {
+    %basew-#{$value} {
+        width: $value * 1%;
+    }
+}
+
+@each $value in $HEIGHTS {
+    %baseh-#{$value} {
+        height: $value * 1%;
+    }
+}
+
+$counter: 1;
+@each $fg, $bg in $COLORS {
+    @each $w in $WIDTHS {
+        @each $h in $HEIGHTS {
+            .foo-#{$counter} {
+                @extend %base-#{inspect($fg)}-#{inspect($bg)};
+                @extend %basew-#{$w};
+                @extend %baseh-#{$h};
+            }
+            $counter: $counter + 1;
+        }
+    }
+}

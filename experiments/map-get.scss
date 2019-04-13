@@ -1,0 +1,13 @@
+// Maps seems to be genuine maps with O(log(N)) or O(1) access
+$N: 20;
+$M: 200000;
+$k: $N / 2;
+
+$map: ();
+@for $i from 0 to $N {
+    $map: map-merge($map, ($i: $i * $i));
+}
+
+@for $i from 0 to $M {
+    $result: map-get($map, $k);
+}

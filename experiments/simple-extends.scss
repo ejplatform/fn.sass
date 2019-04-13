@@ -1,0 +1,16 @@
+@each $fg, $bg in (red black, white black, black white, green blue) {
+    %base-#{inspect($fg)}-#{inspect($bg)} {
+        color: $fg;
+        background-color: $bg;
+    }
+}
+
+$counter: 1;
+@each $fg, $bg in (red black, white black, black white, green blue) {
+    @each $letter in (a b c d e f g h i j k l m n o p q r s t u v w x y z) {
+        .foo-#{$counter}#{$letter} {
+            @extend %base-#{inspect($fg)}-#{inspect($bg)};
+        }
+    }
+    $counter: $counter + 1;
+}

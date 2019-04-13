@@ -1,0 +1,6 @@
+$N: 20000;
+
+@for $i from 0 to $N {
+    $a: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i,
+        tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: (head: $i, size: $i, tail: null))))))))));
+}

@@ -1,0 +1,30 @@
+$COLORS: (red black, white black, black white, green blue);
+$WIDTHS: (0, 10, 25, 50, 75, 90, 100);
+$HEIGHTS: (0, 50, 100);
+
+@mixin color($fg, $bg) {
+    color: $fg;
+    background-color: $bg;
+}
+
+@mixin width($value) {
+    width: $value * 1%;
+}
+
+@mixin height($value) {
+    height: $value * 1%;
+}
+
+$counter: 1;
+@each $fg, $bg in $COLORS {
+    @each $w in $WIDTHS {
+        @each $h in $HEIGHTS {
+            .foo-#{$counter} {
+                @include color($fg, $bg);
+                @include width($w);
+                @include height($h);
+            }
+            $counter: $counter + 1;
+        }
+    }
+}

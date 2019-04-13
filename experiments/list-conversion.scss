@@ -1,0 +1,16 @@
+@import '../mendeleev/preflight';
+
+$N: 500;
+$M: 4;
+
+$lst: (1, 2, 3, 4);
+@for $i from 0 to $M {
+    $lst: join($lst, $lst);
+}
+
+@warn 'List size: #{length($lst)}';
+$lst: linked-list($lst);
+
+@for $i from 0 to $N {
+    $a: link-to-list($lst);
+}

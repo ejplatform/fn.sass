@@ -1,0 +1,6 @@
+// List appending is also quadratic: hints to arrays
+$N: 8000;
+$lst: ();
+@for $i from 0 to $N {
+    $lst: append($lst, $i);
+}

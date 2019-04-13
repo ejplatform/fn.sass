@@ -1,0 +1,4 @@
+// Maps seems to be ordered (sassc)
+@warn inspect((foo: bar, ham: spam));
+@warn inspect((ham: spam, foo: bar));
+@warn inspect(map-merge(map-merge((), (foo: bar)), (ham: spam)));

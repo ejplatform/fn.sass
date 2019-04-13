@@ -1,0 +1,6 @@
+// Map merging in Sass is quadratic: no structural sharing
+$N: 4000;
+$map: ();
+@for $i from 0 to $N {
+    $map: map-merge($map, ($i: $i * $i));
+}
