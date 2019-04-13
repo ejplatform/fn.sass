@@ -5,16 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 @import 'list';
 
-/// Return true if `$st` ends with `$end`
-///
-/// @arg $st
-/// @arg $end
-@function ends-with($st, $end) {
-    @if type-of($st) == color {
-        @return ends-with(inspect($st), $end);
-    }
-    @return str-slice($st, 0, str-length($st) - str-length($end) + 1) == $end;
-}
 
 /// Replace `$sub` with `$replace` in `$st`
 ///
@@ -62,6 +52,8 @@
 
 /// Join all values in a list of strings into a single string.
 @function str-join($xs) {
+    $xs: as-lst($xs);
+
     @if $xs == null {
         @return '';
     }

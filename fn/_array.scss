@@ -7,9 +7,10 @@
 
 $_fn-array-not-given: unique-id() !default;
 
-/// Return true if array contains value.
-/// @arg $arr
-/// @arg $value
+/// Return true if $arr contains $value.
+///
+/// @arg $arr - Input array
+/// @arg $value - Value
 @function contains($arr, $value) {
     @each $x in $arr {
         @if $x == $value {
@@ -19,21 +20,13 @@ $_fn-array-not-given: unique-id() !default;
     @return false;
 }
 
-/// Map function to array.
+/// Return an array slice.
 ///
-/// @arg $arr - The input array.
-/// @arg $fn - A handler to a function or function name.
-@function array-map($fn, $arr, $args...) {
-    $fn: as-func($fn);
-    $result: ();
-    @each $elem in $arr {
-        $result: append($result, call($fn, $elem, $args...));
-    }
-    @return $result;
-}
-
-/// Return a list slice
+/// @arg $arr - Input array
+/// @arg $start - Starting index
+/// @arg $end - Ending index (or null, to slice up to the end)
 @function array-slice($arr, $start, $end: null) {
+    // Ugly "performatic" Sass code ;-)
     $n: length($arr);
     $end: if($end == null, $n, $end);
     $size: $end - $start + 1;
@@ -94,7 +87,14 @@ $_fn-array-not-given: unique-id() !default;
 }
 
 /// Reduce array by function
-@function array-reduce($fn, $arr, $init: $_fn-array-not-given, $args...) {
+///
+/// Arguments are passed in the same order that they appear in the the function
+/// signature, i.e., fn($x, $init, ...)
+///
+/// @arg $fn - A binary operator function
+/// @arg $xs - List
+/// @arg $init - Initial value of reduction
+@function reduce($fn, $arr, $init: $_fn-array-not-given, $args...) {
     $fn: as-func($fn);
     $y: $init;
     @each $x in $arr {

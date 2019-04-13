@@ -97,6 +97,9 @@ $_fn-list-not-given: unique-id() !default;
 // TODO: Implement this?
 // Is it worthwhile pursuit a safer but slower representation of lists?
 @function as-lst($xs) {
+    @if $xs != null and length($xs) != 2 {
+        @error "Input must be a linked list.\nHint: create one from a regular Sass array using L($xs...)"
+    }
     @return $xs;
 }
 
@@ -348,6 +351,7 @@ $_fn-list-not-given: unique-id() !default;
 // FOLDS -----------------------------------------------------------------------
 
 /// Reduce non-empty list by function $fn.
+///
 /// Arguments are passed in the same order that they appear in the the function
 /// signature, i.e., fn($x, $init, ...)
 ///
