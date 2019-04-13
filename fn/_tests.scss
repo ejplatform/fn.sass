@@ -86,6 +86,27 @@ $do: assert-eq(lst-from-map((1: 2, 3: 4)), ((1 2) ((3 4) null)));
 $do: assert-eq(lst-to-array($xs), (1, 2, 3));
 $do: assert-eq(lst-to-map(lst-zip($xs, $ys)), (1: 3, 2: 2, 3: 1));
 
+//
+// NUMERIC FUNCTIONS
+//
+$do: assert-eq(pc(50%), 50%);
+$do: assert-eq(pc(0.5), 50%);
+$do: assert-eq(pow(3, 0), 1);
+$do: assert-eq(pow(3, 1), 3);
+$do: assert-eq(pow(2, 8), 256);
+$do: assert-eq(pow(2, -1), 0.5);
+$do: assert-eq(pow(2, -2), 0.25);
+$do: assert-simeq(sqrt(2), 1.414213562);
+$do: assert-simeq(sqrt(4), 2.0);
+$do: assert-eq(exponential-progression(2, 4, 2), L(2, 4, 8, 16));
+$do: assert-eq(exponential-progression(0.5, 4, 16), L(16, 8, 4, 2));
+$do: assert-eq(sign(42), 1);
+$do: assert-eq(sign(-42), -1);
+$do: assert-eq(sign(0), 0);
+$do: assert-eq(to-number('42'), 42);
+$do: assert-eq(to-number('42.1'), 42.1);
+$do: assert-eq(to-number('42px'), 42px);
+$do: assert-eq(to-length(42, 'px'), 42px);
 
 
 ////
@@ -120,27 +141,8 @@ $do: assert-eq(lst-to-map(lst-zip($xs, $ys)), (1: 3, 2: 2, 3: 1));
 //$do: assert-eq(map-get-first((foo: bar, ham: spam), foo ham), bar);
 //$do: assert-eq(map-get-first((foo: bar, ham: spam), ham foo), spam);
 //
-////
-//// NUMERIC FUNCTIONS
-////
-//$do: assert-eq(pc(50%), 50%);
-//$do: assert-eq(pc(0.5), 50%);
-//$do: assert-eq(pow(3, 0), 1);
-//$do: assert-eq(pow(3, 1), 3);
-//$do: assert-eq(pow(2, 8), 256);
-//$do: assert-eq(pow(2, -1), 0.5);
-//$do: assert-eq(pow(2, -2), 0.25);
-//
-//$do: assert-simeq(sqrt(2), 1.414213562);
-//$do: assert-simeq(sqrt(4), 2.0);
-//
-//$do: assert-eq(exponential-progression(2, 4, 2), 2 4 8 16);
-//$do: assert-eq(exponential-progression(0.5, 4, 16), 16 8 4 2);
-//
-//$do: assert-eq(sign(42), 1);
-//$do: assert-eq(sign(-42), -1);
-//$do: assert-eq(sign(0), 0);
-//
+
+
 ////
 //// SIZES
 ////
