@@ -1,0 +1,76 @@
+////////////////////////////////////////////////////////////////////////////////
+/// STRING FUNCTIONS
+/// @group string functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+@import 'list';
+
+/// Return true if `$st` ends with `$end`
+///
+/// @arg $st
+/// @arg $end
+@function ends-with($st, $end) {
+    @if type-of($st) == color {
+        @return ends-with(inspect($st), $end);
+    }
+    @return str-slice($st, 0, str-length($st) - str-length($end) + 1) == $end;
+}
+
+/// Replace `$sub` with `$replace` in `$st`
+///
+/// @arg $st - Initial string
+/// @arg $sub - Substring
+/// @arg $replace - Replacement (defaults to empty string)
+@function str-replace($st, $sub, $replace: '') {
+    @return lst-join(lst-intersperse($replace, str-split($st, $sub)));
+}
+
+/// Split string into separator and return a (linked-)list of strings
+///
+/// @arg $st - Initial string
+/// @arg $sep - Separator
+@function str-split($st, $sep) {
+    $idx: str-index($st, $sep);
+    @if $idx == null {
+        @return ($st null);
+    }
+    $pre: str-slice($st, 1, $idx - 1);
+    $post: str-slice($st, $idx + length($sep) - 1, length($st));
+    @return ($pre str-split($post, $sep));
+}
+
+/// Checks if string starts with given sub-string
+///
+/// @arg $str - input string
+/// @arg $prefix - substring prefix
+@function str-starts-with($str, $prefix) {
+    @return str-slice($str, 1, length($prefix) + 2) == $prefix;
+}
+
+/// Checks if string ends with given sub-string
+///
+/// @arg $str - input string
+/// @arg $suffix- substring suffix
+@function str-ends-with($str, $suffix) {
+    $n: str-length($suffix);
+    @if $n > str-length($str) {
+        @return false;
+    }
+    $end: str-slice($str, -$n);
+    @return $end == $suffix;
+}
+
+/// Join all values in a list of strings into a single string.
+@function str-join($xs) {
+    @if $xs == null {
+        @return '';
+    }
+    @while cdr($xs) != null {
+        $ys: null;
+        @each $a, $b in lst-chunks($xs, 2) {
+            $ys: (($a + ($b or '')) $ys);
+        }
+        $xs: $ys;
+    }
+    @return car($xs);
+}
