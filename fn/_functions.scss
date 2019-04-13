@@ -1,0 +1,176 @@
+////////////////////////////////////////////////////////////////////////////////
+/// UTILITY FUNCTIONS
+/// @group utility functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+
+/// Convert function or string to a function handle.
+@function as-func($key) {
+    @if type-of($key) == string {
+        //noinspection CssInvalidFunction
+        @return get-function($key);
+    } @else {
+        @return $key;
+    }
+}
+
+/// Version of call(...) that accepts names and function references
+@function call-fn($fn, $args...) {
+    @return call(as-func($fn), $args...);
+}
+
+/// Pass argument through a series of functions.
+@function pipe($x, $fns...) {
+    @each $fn in $fns {
+        $x: call-fn($fn, $x);
+    }
+    @return $x;
+}
+
+/// Pass arguments pairwise through a series of functions.
+/// All intermediate functions must return lists of arguments to the following
+/// functions. The last function in the pipe can return anything.
+@function pipe-2($x, $y, $fns...) {
+    $args: ($x, $y);
+    @each $fn in $fns {
+        $args: call-fn($fn, $args...);
+    }
+    @return $args;
+}
+
+/// Flip the order of a 2-element list
+@function flip($x, $y) {
+    @return ($y, $x);
+}
+
+/// Return its argument
+@function identity($x) {
+    @return $x;
+}
+
+/// Return first element of a list
+@function first($lst) {
+    @return nth($lst, 1);
+}
+
+/// Return second element of a list
+@function second($lst) {
+    @return nth($lst, 2);
+}
+
+/// Return first argument
+@function first-arg($x, $args...) {
+    @return $x;
+}
+
+/// Return second argument
+@function second-arg($x, $y, $args...) {
+    @return $y;
+}
+
+/// Return true if $a > $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-gt($a, $b) {
+    @return $a > $b;
+}
+
+/// Return true if $a >= $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-ge($a, $b) {
+    @return $a >= $b;
+}
+
+/// Return true if $a < $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-lt($a, $b) {
+    @return $a < $b;
+}
+
+/// Return true if $a <= $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-le($a, $b) {
+    @return $a <= $b;
+}
+
+/// Return true if $a != $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-ne($a, $b) {
+    @return $a != $b;
+}
+
+/// Return true if $a == $b
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-eq($a, $b) {
+    @return $a == $b;
+}
+
+/// Add two numbers
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-add($a, $b) {
+    @return $a + $b;
+}
+
+/// Subtract two numbers
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-sub($a, $b) {
+    @return $a - $b;
+}
+
+/// Flipped application of op-sub
+@function op-rsub($a, $b) {
+    @return $b - $a;
+}
+
+/// Multiply two numbers
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-mul($a, $b) {
+    @return $a * $b;
+}
+
+/// Divide two numbers
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-div($a, $b) {
+    @return $a / $b;
+}
+
+/// Flipped application of op-div
+@function op-rdiv($a, $b) {
+    @return $b / $a;
+}
+
+/// Modulo division of two numbers
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function op-mod($a, $b) {
+    @return $a % $b;
+}
+
+/// Flipped application of op-mod
+@function op-rmod($a, $b) {
+    @return $b % $a;
+}
+
+/// Return true for non-null values
+@function not-null($x) {
+    @return $x != null;
+}
+
+/// Multiply number by -1 or invert boolean values
+@function negate($x) {
+    @if $x == true {
+        @return false;
+    } @else if $x == false {
+        @return true;
+    }
+    @return -1 * $x;
+}
