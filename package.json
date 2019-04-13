@@ -27,26 +27,29 @@
     "package.json",
     "test"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "sassdoc": "^2.6.0"
+  },
   "devDependencies": {
     "editorconfig-tools": "^0.1.1",
     "eslint": "^3.14.0",
     "eslint-config-styled": "^0.0.0",
-    "node-sass": "^4.11.0",
     "npm-run-all": "^2.3.0",
     "onchange": "^2.5.0",
     "rimraf": "^2.5.4",
-    "sass-lint": "^1.12.1"
+    "sass-lint": "^1.12.1",
+    "sassdoc-theme-flippant": "^0.1.0"
   },
   "engines": {
     "node": ">=4"
   },
   "scripts": {
+    "docs": "sassdoc -t flippant fn",
     "start": "run-p lint test",
     "clean": "rimraf dist",
     "watch": "onchange src -- run-p test",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
-    "test": "node-sass fn/_tests.scss",
+    "test": "sassc fn/_tests.scss || echo 'ERROR: TESTS FAILED!'",
     "precommit": "run-p lint test"
   },
   "resolutions": {
