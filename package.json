@@ -36,7 +36,6 @@
     "eslint-config-styled": "^0.0.0",
     "npm-run-all": "^2.3.0",
     "onchange": "^2.5.0",
-    "rimraf": "^2.5.4",
     "sass-lint": "^1.12.1",
     "sassdoc-theme-flippant": "^0.1.0"
   },
@@ -44,13 +43,13 @@
     "node": ">=4"
   },
   "scripts": {
-    "docs": "sassdoc -t flippant src",
+    "docs": "sassdoc -t flippant src && rm -rfv docs && mv sassdoc docs",
     "start": "run-p lint test",
-    "clean": "rimraf dist",
+    "clean": "rm dist -rfv",
     "watch": "onchange src -- run-p test",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
     "test": "sassc src/_tests.scss",
-    "precommit": "run-p lint test"
+    "precommit": "run-p lint test docs"
   },
   "resolutions": {
     "natives": "1.1.3"
