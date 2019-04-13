@@ -174,3 +174,21 @@
     }
     @return -1 * $x;
 }
+
+/// Return true for even numbers
+@function is-even($x) {
+    @return $x % 2 == 0;
+}
+
+/// Return true for odd numbers
+@function is-odd($x) {
+    @return $x % 2 == 1;
+}
+
+/// Return true if $x is divisible by $n.
+///
+/// @arg $x - Argument
+/// @arg $n - Divisor
+@function is-divisible-by($x, $n) {
+    @return $x % $n == 0;
+}
