@@ -71,6 +71,22 @@
     }
 }
 
+/// Add `$unit` to `$value`
+///
+/// @author Hugo Giraudel
+/// @arg $value - Value to add unit to
+/// @arg $unit - String representation of the unit
+@function to-length($value, $unit) {
+    $units: (
+        'px': 1px, 'cm': 1cm, 'mm': 1mm, '%': 1%, 'ch': 1ch, 'pc': 1pc,
+        'in': 1in, 'em': 1em, 'rem': 1rem, 'pt': 1pt, 'ex': 1ex, 'vw': 1vw,
+        'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax);
+    @if not index(map-keys($units), $unit) {
+        @error 'Invalid unit `#{$unit}`.';
+    }
+    @return $value * map-get($units, $unit);
+}
+
 /// Convert value to number
 /// See: https://www.sassmeister.com/gist/9fa19d254864f33d4a80
 ///
@@ -92,7 +108,7 @@
         $character: str-slice($value, $i, $i);
 
         @if not (index(map-keys($numbers), $character) or $character == '.') {
-            @return to-number(if($minus, -$result, $result), str-slice($value, $i))
+            @return to-length(if($minus, -$result, $result), str-slice($value, $i))
         }
         @if $character == '.' {
             $digits: 1;
@@ -106,18 +122,3 @@
     @return if($minus, -$result, $result);
 }
 
-/// Add `$unit` to `$value`
-///
-/// @author Hugo Giraudel
-/// @arg $value - Value to add unit to
-/// @arg $unit - String representation of the unit
-@function to-length($value, $unit) {
-    $units: (
-        'px': 1px, 'cm': 1cm, 'mm': 1mm, '%': 1%, 'ch': 1ch, 'pc': 1pc,
-        'in': 1in, 'em': 1em, 'rem': 1rem, 'pt': 1pt, 'ex': 1ex, 'vw': 1vw,
-        'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax);
-    @if not index(map-keys($units), $unit) {
-        @error 'Invalid unit `#{$unit}`.';
-    }
-    @return $value * map-get($units, $unit);
-}

@@ -9,27 +9,58 @@ $_fn-list-not-given: unique-id() !default;
 
 // BASIC -----------------------------------------------------------------------
 
-/// Returns head element of linked list
+/// Create a list of cons cells from arguments
+/// Use as L(1, 2, 3, 4)
+@function L($x1: $_fn-list-not-given,
+            $x2: $_fn-list-not-given,
+            $x3: $_fn-list-not-given,
+            $x4: $_fn-list-not-given, $args...) {
+    @if $x1 == $_fn-list-not-given {
+        @return null;
+    } @else if $x2 == $_fn-list-not-given {
+        @return ($x1 null);
+    } @else if $x3 == $_fn-list-not-given {
+        @return ($x1 ($x2 null));
+    } @else if $x4 == $_fn-list-not-given {
+        @return ($x1 ($x2 ($x3 null)));
+    } @else {
+        @return ($x1 ($x2 ($x3 ($x4 L($args...)))));
+    }
+}
+
+/// Returns first element of list
+///
+/// @arg $xs - List
 @function car($xs) {
     @return nth($xs, 1);
 }
 
-/// Returns tail element of linked list
+/// Returns list's tail
+///
+/// @arg $xs - List
 @function cdr($xs) {
     @return nth($xs, 2);
 }
 
-/// Construct list
-@function cons($x, $tail: null) {
-    @return ($x $tail);
+/// Construct list, adding first argument $x in front of a list of $xs.
+///
+/// @arg $x - Element
+/// @arg $xs - List
+@function cons($x, $xs: null) {
+    @return ($x $xs);
 }
 
 /// Return list length
+///
+/// @arg $xs - List
 @function lst-length($xs) {
     @return if($xs == null, 0, 1 + lst-length(cdr($xs)));
 }
 
-/// Return the n-th element of xs
+/// Return the n-th element in list of $xs
+///
+/// @arg $xs - List
+/// @arg $n - Requested position
 @function lst-nth($xs, $n) {
     @if $xs == null {
         @error "List do not have that many elements."
@@ -37,7 +68,10 @@ $_fn-list-not-given: unique-id() !default;
     @return if($n == 1, car($xs), lst-nth(cdr($xs), $n - 1));
 }
 
-/// Return the position of value in xs.
+/// Return the position of $value in list of $xs.
+///
+/// @arg $xs - List
+/// @arg $value - Lookup value
 @function lst-index($xs, $value) {
     $idx: 0;
     @while $xs != null {
@@ -51,20 +85,26 @@ $_fn-list-not-given: unique-id() !default;
     @return null;
 }
 
-/// Return true if list contains value
+/// Return true if list of $xs contains $value
+///
+/// @arg $xs - List
+/// @arg $value - Lookup value
 @function lst-contains($xs, $value) {
     @return lst-index($xs, $value) != null;
 }
 
-/// Coerce element to list
+// Coerce object to list
+// TODO: Implement this?
+// Is it worthwhile pursuit a safer but slower representation of lists?
 @function as-lst($xs) {
-    // $xs: to-list($xs);
     @return $xs;
 }
 
 // JOINING AND MERGING LISTS ---------------------------------------------------
 
-/// Reverse linked list
+/// Reverse order of elements in list
+///
+/// @arg $xs - List
 @function lst-reverse($xs) {
     $xs: as-lst($xs);
     $ys: null;
@@ -76,7 +116,10 @@ $_fn-list-not-given: unique-id() !default;
     @return $ys;
 }
 
-/// Zip two lists together and return a list of tuples.
+/// Zip two lists together and return a list of conses.
+///
+/// @arg $xs - List
+/// @arg $ys - List
 @function lst-zip($xs, $ys) {
     @if $xs != null and $ys != null {
         @return ((car($xs) car($ys)) lst-zip(cdr($xs), cdr($ys)));
@@ -84,17 +127,25 @@ $_fn-list-not-given: unique-id() !default;
     @return null;
 }
 
-/// Create a list with reversed elements of xs followed by ys.
+/// Create a list with reversed $xs followed by $ys.
+///
+/// @arg $xs - List
+/// @arg $ys - List
 @function lst-stitch($xs, $ys) {
     @return if($xs == null, $ys, lst-stitch(cdr($xs), (car($xs) $ys)));
 }
 
-/// Create a list with xs followed by ys.
+/// Create a list with $xs followed by $ys.
+///
+/// @arg $xs - List
+/// @arg $ys - List
 @function lst-join($xs, $ys) {
     @return lst-stitch(lst-reverse($xs), $ys);
 }
 
 /// Append an array of lists together
+///
+/// @arg $lists - Array of lists
 @function lst-concat($lists) {
     $xs: nth($lists, length($lists));
     @for $i from length($lists) - 1 through 1 {
@@ -103,20 +154,27 @@ $_fn-list-not-given: unique-id() !default;
     @return $xs;
 }
 
-/// Intersperse value between xs
-@function lst-intersperse($value, $xs) {
+/// Intersperse $value between elements of $xs
+///     lst-intersperse(L(1, 2, 3), 0) ==> L(1, 0, 2, 0, 3)
+///
+/// @arg $xs - List
+/// @arg $value - List
+@function lst-intersperse($xs, $value) {
     $xs: as-lst($xs);
     @if $xs == null {
         @return null;
     }
-    $x: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @return if($xs == null, ($x null), ($x ($value lst-intersperse($value, $xs))));
+    $x: car($xs);
+    $xs: cdr($xs);
+    @return if($xs == null, ($x null), ($x ($value lst-intersperse($xs, $value))));
 }
 
 // CREATION --------------------------------------------------------------------
 
-/// Create list with n repetition of given element
+/// Create list with $n repetition of $x
+///
+/// @arg $x - Value
+/// @arg $n - Number of repetitions
 @function lst-repeat($x, $n: 1) {
     $ys: null;
     @while $n > 0 {
@@ -127,6 +185,10 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Return a range of numbers from $a to $b (inclusive)
+///
+/// @arg $a - Starting of range
+/// @arg $b - End of range
+/// @arg $step (optional) - Step between successive values.
 @function lst-range($a, $b, $step: 1) {
     @if $b < $a {
         @return lst-range($b, $a, -$step);
@@ -142,10 +204,13 @@ $_fn-list-not-given: unique-id() !default;
 
 // TRANSFORMATIONS -------------------------------------------------------------
 
-/// Map function to each element of list.
+/// Create a list of fn($x) for each $x in $xs.
 ///
 /// Any additional arguments are passed to the function during function
 /// application.
+///
+/// @arg $fn - Function name or handle
+/// @arg $xs - List
 @function lst-map($fn, $xs, $args...) {
     $xs: as-lst($xs);
     $ys: null;
@@ -158,10 +223,14 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-reverse($ys);
 }
 
-/// Map function to each element of list and the respective index
+/// Create a list of fn($position, $x) for each $x in $xs. Position starts
+/// counting at 1.
 ///
 /// Any additional arguments are passed to the function during function
 /// application.
+///
+/// @arg $fn - Function name or handle
+/// @arg $xs - List
 @function lst-index-map($fn, $xs, $args...) {
     $xs: as-lst($xs);
     $ys: null;
@@ -176,10 +245,13 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-reverse($ys);
 }
 
-/// Filter list by predicate function
+/// Filter list by predicate function.
 ///
 /// Any additional arguments are passed to the function during function
 /// application.
+///
+/// @arg $pred - Predicate function (i.e., function that return booleans)
+/// @arg $xs - List
 @function lst-filter($pred, $xs, $args...) {
     $xs: as-lst($xs);
     $ys: null;
@@ -194,10 +266,13 @@ $_fn-list-not-given: unique-id() !default;
     @return $ys;
 }
 
-/// Return 2 lists, with elements separated by predicate function
+/// Return 2 lists, with elements separated by predicate function.
 ///
 /// Any additional arguments are passed to the function during function
 /// application.
+///
+/// @arg $pred - Predicate function (i.e., function that return booleans)
+/// @arg $xs - List
 @function lst-separate($pred, $xs, $args...) {
     $xs: as-lst($xs);
     $left: null;
@@ -215,25 +290,33 @@ $_fn-list-not-given: unique-id() !default;
     @return (lst-reverse($left) lst-reverse($right));
 }
 
-/// Drop the first n elements of list
-@function lst-drop($n, $xs) {
+/// Drop the first $n elements of list.
+///
+/// @arg $xs - List
+/// @arg $n - Number of elements
+@function lst-drop($xs, $n) {
     $xs: as-lst($xs);
     @if $n <= 0 or $xs == null {
         @return $xs;
     }
-    @return lst-drop($n - 1, cdr($xs));
+    @return lst-drop(cdr($xs), $n - 1);
 }
 
 /// Keep at most the first n elements of list
-@function lst-take($n, $xs) {
+///
+/// @arg $xs - List
+/// @arg $n - Number of elements
+@function lst-take($xs, $n) {
     $xs: as-lst($xs);
     @if $n <= 0 or $xs == null {
         @return null;
     }
-    @return (car($xs) lst-take($n - 1, cdr($xs)));
+    @return (car($xs) lst-take(cdr($xs), $n - 1));
 }
 
 /// Quick sort algorithm
+///
+/// @arg $xs - List
 @function lst-sort($xs) {
     $xs: as-lst($xs);
     @if $xs == null {
@@ -245,7 +328,10 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-join(lst-sort(car($pair)), ($x lst-sort(cdr($pair))));
 }
 
-/// Iterate in chunks of size n.
+/// Iterate in chunks of size $n.
+///
+/// @arg $xs - List
+/// @arg $n - Maximum number of elements in each chunk
 @function lst-chunks($xs, $n) {
     $xs: as-lst($xs);
     $chunk: null;
@@ -261,7 +347,13 @@ $_fn-list-not-given: unique-id() !default;
 
 // FOLDS -----------------------------------------------------------------------
 
-/// Reduce non-empty list by function.
+/// Reduce non-empty list by function $fn.
+/// Arguments are passed in the same order that they appear in the the function
+/// signature, i.e., fn($x, $init, ...)
+///
+/// @arg $fn - A binary operator function
+/// @arg $xs - List
+/// @arg $init - Initial value of reduction
 @function lst-reduce($fn, $xs, $init: $_fn-list-not-given, $args...) {
     $xs: as-lst($xs);
     @if $init== $_fn-list-not-given {
@@ -281,18 +373,24 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Sum all elements of list.
+///
+/// @arg $xs - List
 @function lst-sum($xs) {
     $xs: as-lst($xs);
     @return lst-reduce(op-add, $xs, 0);
 }
 
 /// Multiply all elements of list.
+///
+/// @arg $xs - List
 @function lst-prod($xs) {
     $xs: as-lst($xs);
     @return lst-reduce(op-mul, $xs, 1);
 }
 
 /// True if all elements are true.
+///
+/// @arg $xs - List
 @function lst-all($xs) {
     $xs: as-lst($xs);
     @if $xs == null {
@@ -302,6 +400,8 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// True if any element is true.
+///
+/// @arg $xs - List
 @function lst-any($xs) {
     $xs: as-lst($xs);
     @if $xs == null {
@@ -311,6 +411,9 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Return true if some elements pass predicate.
+///
+/// @arg $pred - Predicate function (i.e., function that return booleans)
+/// @arg $xs - List
 @function lst-some($pred, $xs, $args...) {
     $xs: as-lst($xs);
     $pred: as-func($pred);
@@ -325,6 +428,9 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Return true if all elements pass predicate.
+///
+/// @arg $pred - Predicate function (i.e., function that return booleans)
+/// @arg $xs - List
 @function lst-every($pred, $xs, $args...) {
     $xs: as-lst($xs);
     $pred: as-func($pred);
@@ -339,6 +445,8 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Return maximum value in list
+///
+/// @arg $xs - List
 @function lst-max($xs) {
     $x: car($xs);
     $xs: cdr($xs);
@@ -347,6 +455,8 @@ $_fn-list-not-given: unique-id() !default;
 }
 
 /// Return minimum value in list
+///
+/// @arg $xs - List
 @function lst-min($xs) {
     $x: car($xs);
     $xs: cdr($xs);
@@ -354,7 +464,11 @@ $_fn-list-not-given: unique-id() !default;
     @return if($x < $y, $x, $y);
 }
 
-/// Generalized join
+/// Generalized join. Reduce list with $fn by applying binary partitions.
+///
+/// @arg $fn - Binary operator used to join consecutive elements.
+/// @arg $empty - Neutral element to $fn (i.e., fn($x, $empty) ==> $x.
+/// @arg $xs - List.
 @function lst-join-by($fn, $empty, $xs) {
     $xs: as-lst($xs);
     $fn: as-func($fn);
@@ -379,7 +493,9 @@ $_fn-list-not-given: unique-id() !default;
 
 // CONVERSIONS -----------------------------------------------------------------
 
-/// Create linked list from standard lists/array
+/// Create list from standard lists/array
+///
+/// @arg $arr - A regular Sass array.
 @function lst-from-array($arr) {
     $xs: null;
     @each $x in $arr {
@@ -388,7 +504,9 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-reverse($xs);
 }
 
-/// Create linked list from map
+/// Create list from map
+///
+/// @arg $map - A regular Sass map.
 @function lst-from-map($map) {
     $xs: null;
     @each $x, $y in $map {
@@ -397,7 +515,9 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-reverse($xs);
 }
 
-/// Transform linked list into standard list
+/// Convert list of $xs into a Sass array.
+///
+/// @arg $xs - List
 @function lst-to-array($xs) {
     @if $xs == null {
         @return ();
@@ -441,7 +561,9 @@ $_fn-list-not-given: unique-id() !default;
     @return nth($partials, 1);
 }
 
-/// Transform linked list of pairs of values into a map
+/// Transform list of pairs into a map
+///
+/// @arg $xs - List
 @function lst-to-map($xs) {
     @if $xs == null {
         @return ();
