@@ -1,0 +1,108 @@
+////////////////////////////////////////////////////////////////////////////////
+/// LIST FUNCTIONS
+/// @group list functions
+/// @author Fábio Macêdo Mendes
+////////////////////////////////////////////////////////////////////////////////
+@import 'functions';
+
+$_fn-array-not-given: unique-id() !default;
+
+/// Return true if array contains value.
+/// @arg $arr
+/// @arg $value
+@function contains($arr, $value) {
+    @each $x in $arr {
+        @if $x == $value {
+            @return true;
+        }
+    }
+    @return false;
+}
+
+/// Map function to array.
+///
+/// @arg $arr - The input array.
+/// @arg $fn - A handler to a function or function name.
+@function array-map($fn, $arr, $args...) {
+    $fn: as-func($fn);
+    $result: ();
+    @each $elem in $arr {
+        $result: append($result, call($fn, $elem, $args...));
+    }
+    @return $result;
+}
+
+/// Return a list slice
+@function array-slice($arr, $start, $end: null) {
+    $n: length($arr);
+    $end: if($end == null, $n, $end);
+    $size: $end - $start + 1;
+
+    @if $size <= 32 {
+        $result: ();
+        @while $size > 8 {
+            $result: join($result, (
+                nth($arr, $start), nth($arr, $start + 1), nth($arr, $start + 2),
+                nth($arr, $start + 3), nth($arr, $start + 4), nth($arr, $start + 5),
+                nth($arr, $start + 6), nth($arr, $start + 7)
+            ));
+            $size: $size - 8;
+            $start: $start + 8;
+        }
+        @for $i from $start through $end {
+            $result: append($result, nth($arr, $i));
+        }
+        @return $result;
+    } @else {
+        $first-end: $start + floor($size / 2) - 1;
+        @return join(
+                array-slice($arr, $start, $first-end),
+                array-slice($arr, $first-end + 1, $end)
+        );
+    }
+}
+
+/// Convert value to list.
+/// Lists are returned as-is, maps become list of 2-tuples and other elements
+/// become a list with a single value
+///
+/// @author - https://hugogiraudel.com/2014/04/28/casting-map-into-list/
+/// @arg $value - object to be converted
+/// @arg $keep - can be 'keys', 'values' or 'both' (default). It affects conversion of maps.
+@function to-array($value, $keep: 'both') {
+    $keep: if(index('keys' 'values', $keep), $keep, 'both');
+
+    @if type-of($value) == 'map' {
+        $keys: ();
+        $values: ();
+
+        @each $key, $val in $value {
+            $keys: append($keys, $key);
+            $values: append($values, $val);
+        }
+
+        @if $keep == 'keys' {
+            @return $keys;
+        } @else if $keep == 'values' {
+            @return $values;
+        } @else {
+            @return zip($keys, $values);
+        }
+    }
+
+    @return if(type-of($value) != 'list', ($value,), $value);
+}
+
+/// Reduce array by function
+@function array-reduce($fn, $arr, $init: $_fn-array-not-given, $args...) {
+    $fn: as-func($fn);
+    $y: $init;
+    @each $x in $arr {
+        $y: if($y == $_fn-array-not-given, $x, call($fn, $x, $y, $args...));
+    }
+    @if $y == $_fn-array-not-given {
+        @error "Empty array";
+    }
+    @return $y;
+}
+
