@@ -124,29 +124,29 @@ $do: assert-eq(to-array((1: 2, 3: 4)), (1 2, 3 4));
 //
 // MAP FUNCTIONS
 //
-//$do: assert-eq(map-has-keys((foo: bar, ham: spam), foo ham), true);
-//$do: assert-eq(map-has-keys((foo: bar, ham: spam), foo ham baz), false);
-//
-//$do: assert-eq(map-path((foo: bar), singleton(foo)), bar);
-//$do: assert-eq(map-path((foo: (bar: spam)), singleton(foo)), (bar: spam));
-//$do: assert-eq(map-path((foo: (bar: (ham: spam))), foo bar ham), spam);
-//$do: assert-eq(map-path((foo: (bar: (ham: spam))), foo bar eggs, eggs), eggs);
-//
-//$do: assert-eq(map-get-first((foo: bar, ham: spam), eggs ham), spam);
-//$do: assert-eq(map-get-first((foo: bar, ham: spam), ham eggs), spam);
-//$do: assert-eq(map-get-first((foo: bar, ham: spam), foo ham), bar);
-//$do: assert-eq(map-get-first((foo: bar, ham: spam), ham foo), spam);
-//    map-read
-//    map-join
-//    to-map
-//    map-merge-nested
-//    map-path
-//    map-has-keys
-//    map-select
-//    map-exclude
-//    map-get-first
-//    map-filter-values
-//    map-apply-values
+$map: ('foo': 'bar', 'ham': 'spam');
+$do: assert-eq(map-has-keys($map, foo ham), true);
+$do: assert-eq(map-has-keys($map, foo ham baz), false);
+$do: assert-eq(map-path((foo: bar), singleton(foo)), bar);
+$do: assert-eq(map-path((foo: (bar: spam)), singleton(foo)), (bar: spam));
+$do: assert-eq(map-path((foo: (bar: (ham: spam))), foo bar ham), spam);
+$do: assert-eq(map-path((foo: (bar: (ham: spam))), foo bar eggs, eggs), eggs);
+$do: assert-eq(map-get-first($map, eggs ham), spam);
+$do: assert-eq(map-get-first($map, ham eggs), spam);
+$do: assert-eq(map-get-first($map, foo ham), bar);
+$do: assert-eq(map-get-first($map, ham foo), spam);
+$do: assert-eq(map-read($map, 'foo', 'eggs'), 'bar');
+$do: assert-eq(map-read($map, 'bar', 'eggs'), 'eggs');
+$do: assert-eq(map-join(($map, ('eggs': 'baz'))), ('foo': 'bar', 'ham': 'spam', 'eggs': 'baz'));
+$do: assert-eq(to-map((1 2, 3 4)), (1: 2, 3: 4));
+$do: assert-eq(map-merge-nested(
+        ('foo': ('bar': 'baz')),
+        ('ham': 'spam', 'foo': ('baz': 'bar'))),
+    ('ham': 'spam', 'foo': ('baz': 'bar', 'bar': 'baz')));
+$do: assert-eq(map-select($map, singleton('foo')), ('foo': 'bar'));
+$do: assert-eq(map-exclude($map, singleton('foo')), ('ham': 'spam'));
+$do: assert-eq(map-filter-values(op-ge, (a: 1, b: 2, c: 3), 2), (b: 2, c: 3));
+$do: assert-eq(map-apply-values(op-mul, (a: 1, b: 2, c: 3), 2), (a: 2, b: 4, c: 6));
 
 //
 // STRING FUNCTIONS
@@ -160,7 +160,6 @@ $do: assert-eq(str-split('foo.bar', '.'), L('foo', 'bar'));
 $do: assert-eq(str-split('foo', '.'), L('foo'));
 $do: assert-eq(str-join(L('foo', 'bar', 'baz'), '-'), 'foo-bar-baz');
 $do: assert-eq(str-replace('foo.bar.baz', '.', '-'), 'foo-bar-baz');
-
 
 /*
  * ALL TESTS FINISHED SUCCESSFULLY :)
