@@ -5,14 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 @import 'list';
 
-
-/// Replace `$sub` with `$replace` in `$st`
+/// Partition string into separator and return an array of (prefix, sep, postfix).
+/// If element is not found on string, return (st, '', ''). In all cases,
+/// `$st == str.join(L(str-partition($st)...))`.
 ///
-/// @arg $st - Initial string
-/// @arg $sub - Substring
-/// @arg $replace - Replacement (defaults to empty string)
-@function str-replace($st, $sub, $replace: '') {
-    @return lst-join(lst-intersperse($replace, str-split($st, $sub)));
+/// @arg $st - String
+/// @arg $sep - Separator
+@function str-partition($st, $sep) {
+    $idx: str-index($st, $sep);
+    @if $idx == null {
+        @return ($st, '', '');
+    }
+    $pre: str-slice($st, 1, $idx - 1);
+    $post: str-slice($st, $idx + length($sep));
+    @return ($pre, $sep, $post);
 }
 
 /// Split string into separator and return a (linked-)list of strings
@@ -25,8 +31,27 @@
         @return ($st null);
     }
     $pre: str-slice($st, 1, $idx - 1);
-    $post: str-slice($st, $idx + length($sep) - 1, length($st));
+    $post: str-slice($st, $idx + length($sep));
     @return ($pre str-split($post, $sep));
+}
+
+/// Join all values in a (linked-)list of strings into a single string.
+///
+/// @arg $xs - Input list
+/// @arg $sep - Optional separator
+@function str-join($xs, $sep: '') {
+    $xs: as-lst($xs);
+    $xs: if($sep == '', $xs, lst-intersperse($xs, $sep));
+    @return lst-join-by(op-add, '', $xs);
+}
+
+/// Replace `$sub` with `$replace` in `$st`
+///
+/// @arg $st - Initial string
+/// @arg $sub - Substring
+/// @arg $replace - Replacement (defaults to empty string)
+@function str-replace($st, $sub, $replace: '') {
+    @return str-join(str-split($st, $sub), $replace);
 }
 
 /// Checks if string starts with given sub-string
@@ -50,19 +75,4 @@
     @return $end == $suffix;
 }
 
-/// Join all values in a list of strings into a single string.
-@function str-join($xs) {
-    $xs: as-lst($xs);
 
-    @if $xs == null {
-        @return '';
-    }
-    @while cdr($xs) != null {
-        $ys: null;
-        @each $a, $b in lst-chunks($xs, 2) {
-            $ys: (($a + ($b or '')) $ys);
-        }
-        $xs: $ys;
-    }
-    @return car($xs);
-}

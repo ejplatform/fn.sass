@@ -3,7 +3,7 @@
 /// @group map functions
 /// @author Fábio Macêdo Mendes
 ////////////////////////////////////////////////////////////////////////////////
-@import 'array';
+@import 'list';
 
 $_fn-map-not-given: unique-id() !default;
 
@@ -52,6 +52,7 @@ $_fn-map-not-given: unique-id() !default;
 }
 
 /// Merge two maps up to one level of nesting.
+///
 /// @arg $map1
 /// @arg $map2
 ///
@@ -74,15 +75,17 @@ $_fn-map-not-given: unique-id() !default;
 }
 
 /// Fetch value in key traversing nested maps if key is a list.
+///
 /// @arg $map - a map to extract the value from
 /// @arg $key - value or list of values for nested keys
 /// @arg $default - fallback value if key is not present
 @function map-path($map, $key, $default: $_fn-map-not-given) {
     @if type-of($key) == list {
-        @while length($key) > 0 {
-            @if map-has-key($map, nth($key, 1)) {
-                $map: map-get($map, nth($key, 1));
-                $key: list-tail($key);
+        $key: L($key...);
+        @while $key != null {
+            @if map-has-key($map, car($key)) {
+                $map: map-get($map, car($key));
+                $key: cdr($key);
             } @else if $default == $_fn-map-not-given {
                 @error 'Path not found in map: #{$key}'
             } @else {
@@ -125,10 +128,11 @@ $_fn-map-not-given: unique-id() !default;
     @return $result;
 }
 
-/// Select first element that matches a list of key or return the given default
+/// Select first element that matches one element from an array of keys or return
+/// the given default
 ///
 /// @arg $map - map to operate from
-/// @arg $key - key
+/// @arg $keys - array of keys
 /// @arg $default - default value. If not given and key not present, issue an error;
 @function map-get-first($map, $keys, $default: $_fn-map-not-given) {
     @each $key in $keys {
@@ -145,13 +149,13 @@ $_fn-map-not-given: unique-id() !default;
 
 /// Filter map to include only items in which the value passes a predicate
 ///
-/// @arg $map - Input map
 /// @arg $pred - Function or name of boolean function that is used to filter items.
-@function map-filter-values($map, $pred) {
+/// @arg $map - Input map
+@function map-filter-values($pred, $map, $args...) {
     $pred: as-func($pred);
     $result: ();
     @each $key, $value in $map {
-        @if call($pred, $value) {
+        @if call($pred, $value, $args...) {
             $result: map-merge($result, ($key: $value));
         }
     }
@@ -160,13 +164,13 @@ $_fn-map-not-given: unique-id() !default;
 
 /// Apply function to all values in map
 ///
+/// @arg $fn - Function
 /// @arg $map - Input map
-/// @arg $func - Transform
-@function map-apply-values($map, $func) {
-    $func: as-func($func);
+@function map-apply-values($fn, $map, $args...) {
+    $func: as-func($fn);
     $result: ();
     @each $key, $value in $map {
-        $result: map-merge($result, ($key: call($func, $value)));
+        $result: map-merge($result, ($key: call($func, $value, $args...)));
     }
     @return $result;
 }

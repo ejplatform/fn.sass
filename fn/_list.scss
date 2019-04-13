@@ -348,6 +348,29 @@ $_fn-list-not-given: unique-id() !default;
     @return if($chunk == null, null, (lst-reverse($chunk) lst-chunks($xs, $n)));
 }
 
+/// Iterate in chunks of 2.
+/// Similar to lst-chunks, but elements are cons cells and it is slightly more
+/// efficient.
+///
+/// @arg $xs - List.
+/// @arg $reverse - If true, reverse result.
+@function lst-pairwise($xs, $reverse: false) {
+    $xs: as-lst($xs);
+    $ys: null;
+    @while $xs != null {
+        $a: car($xs);
+        $xs: cdr($xs);
+        @if $xs != null {
+            $b: car($xs);
+            $xs: cdr($xs);
+            $ys: (($a $b) $ys);
+        } @else {
+            $ys: (append((), $a) $ys);
+        }
+    }
+    @return if($reverse, $ys, lst-reverse($ys));
+}
+
 // FOLDS -----------------------------------------------------------------------
 
 /// Reduce non-empty list by function $fn.
@@ -481,14 +504,15 @@ $_fn-list-not-given: unique-id() !default;
     }
     @while cdr($xs) != null {
         $ys: null;
-        $chunks: lst-chunks($xs, 2);
-        @while $chunks != null {
-            $pair: car($chunks);
-            $chunks: cdr($chunks);
-            $a: car($pair);
-            $b: cdr($pair);
-            $b: if($b == null, null, car($b));
-            $ys: (call($fn, $a, $b or $empty) $ys);
+        $pairs: lst-pairwise($xs, true);
+        @while $pairs != null {
+            $pair: car($pairs);
+            $pairs: cdr($pairs);
+            @if length($pair) == 1 {
+                $ys: (call($fn, nth($pair, 1), $empty) $ys);
+            } @else {
+                $ys: (call($fn, nth($pair, 1), nth($pair, 2)) $ys);
+            }
         }
         $xs: $ys;
     }

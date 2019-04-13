@@ -57,7 +57,7 @@ $do: assert-eq(lst-range(2, 5), (2 (3 (4 (5 null)))));
 $do: assert-eq(lst-range(1, 7, 2), (1 (3 (5 (7 null)))));
 
 // LISTS: Transformations
-$long: (1 (2 (3 (4 (5 (6 (7 (8 (9 (10 null))))))))));
+$long: L(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 $do: assert-eq(lst-map(op-mul, $xs, 2), (2 (4 (6 null))));
 $do: assert-eq(lst-index-map(op-div, $xs), (1 (1 (1 null))));
 $do: assert-eq(lst-filter(op-gt, $xs, 2), (3 null));
@@ -67,6 +67,9 @@ $do: assert-eq(lst-take($xs, 2), (1 (2 null)));
 $do: assert-eq(lst-sort($ys), $xs);
 $do: assert-eq(lst-chunks($xs, 2), ((1 (2 null)) ((3 null) null)));
 $do: assert-eq(lst-chunks($long, 2), ((1 (2 null)) ((3 (4 null)) ((5 (6 null)) ((7 (8 null)) ((9 (10 null)) null))))));
+$do: assert-eq(lst-pairwise($long), L(1 2, 3 4, 5 6, 7 8, 9 10));
+$do: assert-eq(lst-pairwise($long, true), L(9 10, 7 8, 5 6, 3 4, 1 2));
+$do: assert-eq(lst-pairwise(cdr($long)), L(2 3, 4 5, 6 7, 8 9, singleton(10)));
 
 // LISTS: Folds
 $do: assert-eq(lst-reduce(op-rdiv, $xs, 12), 2);
@@ -109,7 +112,7 @@ $do: assert-eq(to-number('42px'), 42px);
 $do: assert-eq(to-length(42, 'px'), 42px);
 
 //
-// LIST FUNCTIONS
+// ARRAY FUNCTIONS
 //
 $arr: (1, 2, 3, 4);
 $do: assert-eq(contains($arr, 3), true);
@@ -118,9 +121,9 @@ $do: assert-eq(slice($arr, 2, 3), (2 3));
 $do: assert-eq(reduce(op-add, $arr), 10);
 $do: assert-eq(to-array((1: 2, 3: 4)), (1 2, 3 4));
 
-////
-//// MAP FUNCTIONS
-////
+//
+// MAP FUNCTIONS
+//
 //$do: assert-eq(map-has-keys((foo: bar, ham: spam), foo ham), true);
 //$do: assert-eq(map-has-keys((foo: bar, ham: spam), foo ham baz), false);
 //
@@ -133,28 +136,31 @@ $do: assert-eq(to-array((1: 2, 3: 4)), (1 2, 3 4));
 //$do: assert-eq(map-get-first((foo: bar, ham: spam), ham eggs), spam);
 //$do: assert-eq(map-get-first((foo: bar, ham: spam), foo ham), bar);
 //$do: assert-eq(map-get-first((foo: bar, ham: spam), ham foo), spam);
-//
+//    map-read
+//    map-join
+//    to-map
+//    map-merge-nested
+//    map-path
+//    map-has-keys
+//    map-select
+//    map-exclude
+//    map-get-first
+//    map-filter-values
+//    map-apply-values
 
-////
-//// SIZES
-////
-//$do: assert-eq(size-scale('3'), 1.5rem);
-//$do: assert-eq(size-scale(3), 1.5rem);
-//$do: assert-eq(size-scale(-2), -0.75rem);
-//$do: assert-eq(size-scale('5p'), 9rem);
-//$do: assert-eq(size-scale(3rem), 3rem);
 //
-////
-//// STRING FUNCTIONS
-////
-//$do: assert-eq(str-starts-with(foobar, foo), true);
-//$do: assert-eq(str-starts-with(foobar, bar), false);
+// STRING FUNCTIONS
 //
-//$do: assert-eq(str-ends-with(foobar, bar), true);
-//$do: assert-eq(str-ends-with(foobar, foo), false);
-//
-//$do: assert-eq(str-split('foo.bar', '.'), foo bar);
-//$do: assert-eq(str-split('foo', '.'), singleton(foo));
+$do: assert-eq(str-partition('foo.bar.baz', '.'), ('foo', '.', 'bar.baz'));
+$do: assert-eq(str-starts-with('foobar', 'foo'), true);
+$do: assert-eq(str-starts-with('foobar', 'bar'), false);
+$do: assert-eq(str-ends-with('foobar', 'bar'), true);
+$do: assert-eq(str-ends-with('foobar', 'foo'), false);
+$do: assert-eq(str-split('foo.bar', '.'), L('foo', 'bar'));
+$do: assert-eq(str-split('foo', '.'), L('foo'));
+$do: assert-eq(str-join(L('foo', 'bar', 'baz'), '-'), 'foo-bar-baz');
+$do: assert-eq(str-replace('foo.bar.baz', '.', '-'), 'foo-bar-baz');
+
 
 /*
  * ALL TESTS FINISHED SUCCESSFULLY :)
