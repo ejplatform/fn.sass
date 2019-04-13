@@ -42,7 +42,7 @@
 @function str-join($xs, $sep: '') {
     $xs: as-lst($xs);
     $xs: if($sep == '', $xs, lst-intersperse($xs, $sep));
-    @return lst-join-by(op-add, '', $xs);
+    @return lst-join-by(add, '', $xs);
 }
 
 /// Replace `$sub` with `$replace` in `$st`

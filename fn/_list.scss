@@ -327,7 +327,7 @@ $_fn-list-not-given: unique-id() !default;
     }
     $x: car($xs);
     $xs: cdr($xs);
-    $pair: lst-separate(op-lt, $xs, $x);
+    $pair: lst-separate(lt, $xs, $x);
     @return lst-join(lst-sort(car($pair)), ($x lst-sort(cdr($pair))));
 }
 
@@ -404,7 +404,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 @function lst-sum($xs) {
     $xs: as-lst($xs);
-    @return lst-reduce(op-add, $xs, 0);
+    @return lst-reduce(add, $xs, 0);
 }
 
 /// Multiply all elements of list.
@@ -412,7 +412,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 @function lst-prod($xs) {
     $xs: as-lst($xs);
-    @return lst-reduce(op-mul, $xs, 1);
+    @return lst-reduce(mul, $xs, 1);
 }
 
 /// True if all elements are true.

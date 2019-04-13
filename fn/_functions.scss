@@ -71,60 +71,60 @@
 /// Return true if $a > $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-gt($a, $b) {
+@function gt($a, $b) {
     @return $a > $b;
 }
 
 /// Return true if $a >= $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-ge($a, $b) {
+@function ge($a, $b) {
     @return $a >= $b;
 }
 
 /// Return true if $a < $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-lt($a, $b) {
+@function lt($a, $b) {
     @return $a < $b;
 }
 
 /// Return true if $a <= $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-le($a, $b) {
+@function le($a, $b) {
     @return $a <= $b;
 }
 
 /// Return true if $a != $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-ne($a, $b) {
+@function ne($a, $b) {
     @return $a != $b;
 }
 
 /// Return true if $a == $b
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-eq($a, $b) {
+@function eq($a, $b) {
     @return $a == $b;
 }
 
 /// Add two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-add($a, $b) {
+@function add($a, $b) {
     @return $a + $b;
 }
 
 /// Subtract two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-sub($a, $b) {
+@function sub($a, $b) {
     @return $a - $b;
 }
 
-/// Flipped application of op-sub
+/// Flipped application of sub
 @function op-rsub($a, $b) {
     @return $b - $a;
 }
@@ -132,31 +132,31 @@
 /// Multiply two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-mul($a, $b) {
+@function mul($a, $b) {
     @return $a * $b;
 }
 
 /// Divide two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-div($a, $b) {
+@function div($a, $b) {
     @return $a / $b;
 }
 
-/// Flipped application of op-div
-@function op-rdiv($a, $b) {
+/// Flipped application of div
+@function rdiv($a, $b) {
     @return $b / $a;
 }
 
 /// Modulo division of two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
-@function op-mod($a, $b) {
+@function mod($a, $b) {
     @return $a % $b;
 }
 
-/// Flipped application of op-mod
-@function op-rmod($a, $b) {
+/// Flipped application of mod
+@function rmod($a, $b) {
     @return $b % $a;
 }
 
