@@ -1,0 +1,55 @@
+{
+  "name": "fn.sass",
+  "version": "0.0.1",
+  "description": "Missing functional utilities for Sass.",
+  "homepage": "https://fabiommendes.github.io/fn.sass/",
+  "repository": "https://github.com/fabiommendes/fn.sass/",
+  "license": "MIT",
+  "author": "Fábio Mendes <fabiomacedomendes@gmail.com>",
+  "keywords": [
+    "functional",
+    "sass",
+    "scss"
+  ],
+  "ignore": [
+    ".appveyor.yml",
+    ".editorconfig",
+    ".eslintrc",
+    ".github",
+    ".gitignore",
+    ".sasslintrc",
+    ".travis.yml",
+    "backstop.conf.js",
+    "bower.json",
+    "changelog.md",
+    "composer.json",
+    "package.js",
+    "package.json",
+    "test"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "editorconfig-tools": "^0.1.1",
+    "eslint": "^3.14.0",
+    "eslint-config-styled": "^0.0.0",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^2.3.0",
+    "onchange": "^2.5.0",
+    "rimraf": "^2.5.4",
+    "sass-lint": "^1.12.1"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "start": "run-p lint test",
+    "clean": "rimraf dist",
+    "watch": "onchange src -- run-p test",
+    "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
+    "test": "node-sass fn/_tests.scss",
+    "precommit": "run-p lint test"
+  },
+  "resolutions": {
+    "natives": "1.1.3"
+  }
+}
