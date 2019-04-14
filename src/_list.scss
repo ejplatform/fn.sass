@@ -93,14 +93,21 @@ $_fn-list-not-given: unique-id() !default;
     @return lst-index($xs, $value) != null;
 }
 
-// Coerce object to list
-// TODO: Implement this?
-// Is it worthwhile pursuit a safer but slower representation of lists?
-@function as-lst($xs) {
-    @if $xs != null and length($xs) != 2 {
-        @error "Input must be a linked list.\nHint: create one from a regular Sass array using L($xs...)"
+/// Cast list object as a linked list.
+///
+/// @arg $xs - list or list-like object.
+@function to-lst($xs) {
+    //noinspection CssInvalidFunction
+    @if $xs == null {
+        @return $xs;
+    } @else if type-of($xs) == 'list' {
+        @if is-bracketed($xs) or list-separator($xs) == 'comma' {
+            @return lst-from-array($xs);
+        } @else if length($xs) == 2 {
+            @return $xs;
+        }
     }
-    @return $xs;
+    @error "Input must be a linked list.\nHint: create one from a regular Sass array using L($xs...)"
 }
 
 // JOINING AND MERGING LISTS ---------------------------------------------------
@@ -109,7 +116,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-reverse($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $ys: null;
     @while $xs != null {
         $x: nth($xs, 1);
@@ -163,7 +170,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 /// @arg $value - List
 @function lst-intersperse($xs, $value) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $xs == null {
         @return null;
     }
@@ -215,7 +222,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $fn - Function name or handle
 /// @arg $xs - List
 @function lst-map($fn, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $ys: null;
     $fn: as-func($fn);
     @while $xs != null {
@@ -235,7 +242,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $fn - Function name or handle
 /// @arg $xs - List
 @function lst-index-map($fn, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $ys: null;
     $fn: as-func($fn);
     $idx: 1;
@@ -256,7 +263,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $pred - Predicate function (i.e., function that return booleans)
 /// @arg $xs - List
 @function lst-filter($pred, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $ys: null;
     $pred: as-func($pred);
     @while $xs != null {
@@ -277,7 +284,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $pred - Predicate function (i.e., function that return booleans)
 /// @arg $xs - List
 @function lst-separate($pred, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $left: null;
     $right: null;
     $pred: as-func($pred);
@@ -298,7 +305,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 /// @arg $n - Number of elements
 @function lst-drop($xs, $n) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $n <= 0 or $xs == null {
         @return $xs;
     }
@@ -310,7 +317,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 /// @arg $n - Number of elements
 @function lst-take($xs, $n) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $n <= 0 or $xs == null {
         @return null;
     }
@@ -321,7 +328,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-sort($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $xs == null {
         @return null;
     }
@@ -336,7 +343,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 /// @arg $n - Maximum number of elements in each chunk
 @function lst-chunks($xs, $n) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $chunk: null;
     @for $i from 1 through $n {
         @if $xs != null {
@@ -355,7 +362,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List.
 /// @arg $reverse - If true, reverse result.
 @function lst-pairwise($xs, $reverse: false) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $ys: null;
     @while $xs != null {
         $a: car($xs);
@@ -382,7 +389,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $xs - List
 /// @arg $init - Initial value of reduction
 @function lst-reduce($fn, $xs, $init: $_fn-list-not-given, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $init== $_fn-list-not-given {
         @if $xs == null {
             @error "Cannot reduce an empty list";
@@ -403,7 +410,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-sum($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @return lst-reduce(add, $xs, 0);
 }
 
@@ -411,7 +418,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-prod($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @return lst-reduce(mul, $xs, 1);
 }
 
@@ -419,7 +426,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-all($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $xs == null {
         @return true;
     }
@@ -430,7 +437,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $xs - List
 @function lst-any($xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     @if $xs == null {
         @return false;
     }
@@ -442,7 +449,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $pred - Predicate function (i.e., function that return booleans)
 /// @arg $xs - List
 @function lst-some($pred, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $pred: as-func($pred);
     @while $xs != null {
         $x: car($xs);
@@ -459,7 +466,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $pred - Predicate function (i.e., function that return booleans)
 /// @arg $xs - List
 @function lst-every($pred, $xs, $args...) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $pred: as-func($pred);
     @while $xs != null {
         $x: car($xs);
@@ -497,7 +504,7 @@ $_fn-list-not-given: unique-id() !default;
 /// @arg $empty - Neutral element to $fn (i.e., fn($x, $empty) ==> $x.
 /// @arg $xs - List.
 @function lst-join-by($fn, $empty, $xs) {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $fn: as-func($fn);
     @if $xs == null {
         @return $empty;
@@ -640,4 +647,26 @@ $_fn-list-not-given: unique-id() !default;
     @return nth($partials, 1);
 }
 
-
+/// Coerce object to list. Lists are returned as is.
+///
+/// It is more aggressive than to-lst to cast objects to list.
+///     * Scalars are converted to single argument lists.
+///     * Arrays are converted to lists (except when it causes ambiguity)
+@function coerce-to-lst($xs) {
+    //noinspection CssInvalidFunction
+    @if $xs == null {
+        @return null;
+    } @else if type-of($xs) == 'list' {
+        @if is-bracketed($xs) or list-separator($xs) == 'comma' {
+            @return lst-from-array($xs);
+        } @else if length($xs) == 2 {
+            @return $xs;
+        } @else {
+            @warn 'Please avoid using spaced-separated lists in places that expect linked-lists';
+            @return lst-from-array($xs);
+        }
+    } @else if type-of($xs) == 'map' {
+        @return lst-from-map($xs);
+    }
+    @return ($xs null);
+}

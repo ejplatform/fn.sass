@@ -40,7 +40,7 @@
 /// @arg $xs - Input list
 /// @arg $sep - Optional separator
 @function str-join($xs, $sep: '') {
-    $xs: as-lst($xs);
+    $xs: to-lst($xs);
     $xs: if($sep == '', $xs, lst-intersperse($xs, $sep));
     @return lst-join-by(add, '', $xs);
 }

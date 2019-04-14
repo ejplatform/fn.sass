@@ -10,8 +10,8 @@ $_fn-array-not-given: unique-id() !default;
 /// Return array of a single element.
 ///
 /// @arg $x - Single element of resulting array.
-@function singleton($x) {
-    @return append((), $x);
+@function singleton($x, $separator: space) {
+    @return append((), $x, $separator);
 }
 
 /// Return true if $arr contains $value.
