@@ -5,30 +5,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 @import 'list';
 
-$_fn-map-not-given: unique-id() !default;
-
 /// Return value if key exists on map, otherwise return default.
 ///
 /// @arg $map - map to operate from
 /// @arg $key - key
-/// @arg $default - default value. If not given and key not present, issue an error;
-@function map-read($map, $key, $default: $_fn-map-not-given) {
-    @if map-has-key($map, $key) {
-        @return map-get($map, $key);
-    } @else if $default != $_fn-map-not-given {
-        @return $default
-    } @else {
-        @error 'Key not present in map: #{$key}';
-    }
+/// @arg $default - default value. If not given and key not present, return null;
+@function map-read($map, $key, $default: null) {
+    $value: map-get($map, $key);
+    @return if($value == null, $default, $value);
 }
 
-/// Join a list of maps together. Entries in later maps override previously
-/// defined values.
+/// Join a (linked-)list of maps together. Entries in later maps override
+/// previously defined values.
 ///
 /// @arg $maps - a list of maps
 @function map-join($maps) {
-    $result: ();
-    @each $map in $maps {
+    $maps: to-lst($maps);
+    $result: map-remove((), null);
+    @while $maps != null {
+        $map: car($maps);
+        $maps: cdr($maps);
         $result: map-merge($result, $map);
     }
     @return $result;
@@ -74,33 +70,40 @@ $_fn-map-not-given: unique-id() !default;
     @return $result;
 }
 
-/// Fetch value in key traversing nested maps if key is a list.
+/// Fetch keys in path recursively.
+///
+/// @example scss
+///     map-path(('foo': ('bar': 'baz')), L('foo', 'bar')) ==> 'baz'
 ///
 /// @arg $map - a map to extract the value from
-/// @arg $key - value or list of values for nested keys
+/// @arg $path - (linked-)list of values
 /// @arg $default - fallback value if key is not present
-@function map-path($map, $key, $default: $_fn-map-not-given) {
-    @if type-of($key) == list {
-        $key: L($key...);
-        @while $key != null {
-            @if map-has-key($map, car($key)) {
-                $map: map-get($map, car($key));
-                $key: cdr($key);
-            } @else if $default == $_fn-map-not-given {
-                @error 'Path not found in map: #{$key}'
-            } @else {
-                @return $default;
-            }
-        }
-        @return $map;
-    } @else {
-        @return map-read($map, $key, $default);
+@function map-path($map, $path, $default: null) {
+    $path: coerce-to-lst($path);
+    @if $path == null {
+        @error 'Empty path';
     }
+    $key: car($path);
+    @while cdr($path) != null {
+        $path: cdr($path);
+        $map: map-get($map, $key);
+        @if $map == null {
+            @return $default;
+        }
+        $key: car($path);
+    }
+    @return map-read($map, $key, $default);
 }
 
-/// Return true if map has all keys in the list
+/// Return true if map has all keys in the (linked-)list
+///
+/// @arg $map - A mapping
+/// @arg $keys - A (linked-)list of test keys.
 @function map-has-keys($map, $keys) {
-    @each $key in $keys {
+    $keys: to-lst($keys);
+    @while $keys != null {
+        $key: car($keys);
+        $keys: cdr($keys);
         @if not map-has-key($map, $key) {
             @return false;
         }
@@ -108,10 +111,17 @@ $_fn-map-not-given: unique-id() !default;
     @return true;
 }
 
-/// Keep only the given keys on map
+/// Keep only the given keys on map.
+///
+/// @arg $map - A mapping
+/// @arg $keys - A (linked-)list of test keys.
 @function map-select($map, $keys) {
-    $result: ();
-    @each $key in $keys {
+    $keys: to-lst($keys);
+    $result: map-remove((), null);
+
+    @while $keys != null {
+        $key: car($keys);
+        $keys: cdr($keys);
         @if map-has-key($map, $key) {
             $result: map-merge($result, ($key: map-get($map, $key)));
         }
@@ -120,9 +130,16 @@ $_fn-map-not-given: unique-id() !default;
 }
 
 /// Remove the given keys from map
+///
+/// @arg $map - A mapping
+/// @arg $keys - A (linked-)list of test keys.
 @function map-exclude($map, $keys) {
+    $keys: to-lst($keys);
     $result: $map;
-    @each $key in $keys {
+
+    @while $keys != null {
+        $key: car($keys);
+        $keys: cdr($keys);
         $result: map-remove($result, $key);
     }
     @return $result;
@@ -133,18 +150,19 @@ $_fn-map-not-given: unique-id() !default;
 ///
 /// @arg $map - map to operate from
 /// @arg $keys - array of keys
-/// @arg $default - default value. If not given and key not present, issue an error;
-@function map-get-first($map, $keys, $default: $_fn-map-not-given) {
-    @each $key in $keys {
-        @if map-has-key($map, $key) {
-            @return map-get($map, $key);
+/// @arg $default - default value.
+@function map-get-first($map, $keys, $default: null) {
+    $keys: to-lst($keys);
+
+    @while $keys != null {
+        $key: car($keys);
+        $keys: cdr($keys);
+        $value: map-get($map, $key);
+        @if $value != null {
+            @return $value;
         }
     }
-    @if $default != $_fn-map-not-given {
-        @return $default
-    } @else {
-        @error 'Key not present in map: #{$keys}';
-    }
+    @return $default;
 }
 
 /// Filter map to include only items in which the value passes a predicate
@@ -174,6 +192,54 @@ $_fn-map-not-given: unique-id() !default;
     }
     @return $result;
 }
+
+/// Extract information on $path from a (linked-)list of multiple $maps.
+///
+/// This function is useful to implement access to nested configuration maps,
+/// when we want to merge the results of different sources to work as a single
+/// nested mapping.
+///
+/// @arg $maps - a (linked-)list of maps.
+/// @arg $path - a (linked-)list location of entry on maps.
+/// @arg $default - result this value, if given, when requested data is not
+///                 present on maps
+@function map-path-merge($maps, $path, $default: null) {
+    $path: coerce-to-lst($path);
+    $maps: to-lst($maps);
+    @if $path == null {
+        @error 'Path cannot be empty';
+    }
+    @if $maps== null {
+        @error 'Maps cannot be empty';
+    }
+
+    //noinspection CssInvalidFunction
+    @if cdr($path) == null {
+        $key: car($path);
+        @while $maps != null {
+            $map: car($maps);
+            $maps: cdr($maps);
+            $default: _fn-merge-default($default, map-get($map, $key));
+        }
+    }
+    @return $default;
+}
+
+@function _fn-merge-default($value, $new) {
+    @if $new == null {
+        @return $value;
+    } @else if type-of($new) == map and type-of($value) == map {
+        @return map-merge-nested($new, $value);
+    } @else if type-of($new) == map {
+        @return map-merge((value: $value), $new);
+    } @else if type-of($value) == map {
+        @return map-merge($value, (value: $new));
+    } @else {
+        @return $new;
+    }
+}
+
+
 
 //------------------------------------------------------------------------------
 // Auxiliary non-api functions
