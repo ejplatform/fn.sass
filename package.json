@@ -1,7 +1,7 @@
 {
   "name": "fn.sass",
-  "version": "0.1.0",
-  "description": "Missing functional utilities for Sass.",
+  "version": "0.2.0",
+  "description": "Functional programming in Sass.",
   "homepage": "https://fabiommendes.github.io/fn.sass/",
   "repository": "https://github.com/fabiommendes/fn.sass/",
   "license": "MIT",
