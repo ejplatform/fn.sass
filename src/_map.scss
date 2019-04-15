@@ -204,32 +204,28 @@
 /// @arg $default - result this value, if given, when requested data is not
 ///                 present on maps
 @function map-path-merge($maps, $path, $default: null) {
-    $path: coerce-to-lst($path);
     $maps: to-lst($maps);
-    @if $path == null {
-        @error 'Path cannot be empty';
-    }
     @if $maps== null {
         @error 'Maps cannot be empty';
     }
 
     //noinspection CssInvalidFunction
-    @if cdr($path) == null {
-        $key: car($path);
-        @while $maps != null {
-            $map: car($maps);
-            $maps: cdr($maps);
-            $default: _fn-merge-default($default, map-get($map, $key));
-        }
+    @while $maps != null {
+        $map: car($maps);
+        $maps: cdr($maps);
+        $default: _fn-merge-default($default, map-path($map, $path));
     }
+
     @return $default;
 }
 
 @function _fn-merge-default($value, $new) {
     @if $new == null {
         @return $value;
+    } @else if $value == null {
+        @return $new;
     } @else if type-of($new) == map and type-of($value) == map {
-        @return map-merge-nested($new, $value);
+        @return map-merge-nested($value, $new);
     } @else if type-of($new) == map {
         @return map-merge((value: $value), $new);
     } @else if type-of($value) == map {
@@ -238,8 +234,6 @@
         @return $new;
     }
 }
-
-
 
 //------------------------------------------------------------------------------
 // Auxiliary non-api functions

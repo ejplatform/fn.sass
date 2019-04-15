@@ -226,6 +226,10 @@ $do: assert-eq(map-apply-values(mul, (a: 1, b: 2, c: 3), 2), (a: 2, b: 4, c: 6))
 
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('foo')), 'bar');
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('bar')), 'foo');
+$do: assert-eq(map-path-merge(L($map-2, $map-1), L('ham')), ('spam': 'eggs', 'answer': 42));
+$do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham')), ('spam': 'ham', 'answer': 42));
+$do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham', 'spam')), 'ham');
+$do: assert-eq(map-path-merge(L($map-2, $map-1), L('ham', 'spam')), 'eggs');
 
 //------------------------------------------------------------------------------
 // STRING FUNCTIONS
