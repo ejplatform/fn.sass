@@ -46,7 +46,7 @@ $_fn-list-not-given: unique-id() !default;
 ///
 /// @arg $x - Element
 /// @arg $xs - List
-@function cons($x, $xs: null) {
+@function cons($x, $xs) {
     @return ($x $xs);
 }
 
@@ -177,6 +177,30 @@ $_fn-list-not-given: unique-id() !default;
     $x: car($xs);
     $xs: cdr($xs);
     @return if($xs == null, ($x null), ($x ($value lst-intersperse($xs, $value))));
+}
+
+/// Intercalate elements of both lists
+///
+/// @arg $xs - First list
+/// @arg $ys - Second list
+@function lst-intercalate($xs, $ys) {
+    $xs: to-lst($xs);
+    $ys: to-lst($ys);
+    $res: null;
+    @while $xs != null and $ys != null {
+        $x: car($xs);
+        $xs: cdr($xs);
+        $y: car($ys);
+        $ys: cdr($ys);
+        $res: cons($y, cons($x, $res));
+        @if $xs == null {
+            @return lst-stitch($res, $ys)
+        }
+        @if $ys == null {
+            @return lst-stitch($res, $xs)
+        }
+    }
+    @return lst-reverse($res);
 }
 
 // CREATION --------------------------------------------------------------------
@@ -376,6 +400,23 @@ $_fn-list-not-given: unique-id() !default;
         }
     }
     @return if($reverse, $ys, lst-reverse($ys));
+}
+
+/// Create a list of pairs of (position value).
+///
+/// @arg $xs - Input list
+/// @arg $start - Optional starting value (begins with 1)
+/// @arg $step - Optional step (1 if not given)
+@function lst-enumerate($xs, $start: 1, $step: 1, $reverse: false) {
+    $xs: to-lst($xs);
+    $res: null;
+    @while $xs != null {
+        $x: car($xs);
+        $xs: cdr($xs);
+        $res: cons(($start $x), $res);
+        $start: $start + $step;
+    }
+    @return if($reverse, $res, lst-reverse($res));
 }
 
 // FOLDS -----------------------------------------------------------------------
