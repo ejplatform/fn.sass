@@ -17,7 +17,7 @@
         @return ($st, '', '');
     }
     $pre: str-slice($st, 1, $idx - 1);
-    $post: str-slice($st, $idx + length($sep));
+    $post: str-slice($st, $idx + str-length($sep));
     @return ($pre, $sep, $post);
 }
 
@@ -31,7 +31,7 @@
         @return ($st null);
     }
     $pre: str-slice($st, 1, $idx - 1);
-    $post: str-slice($st, $idx + length($sep));
+    $post: str-slice($st, $idx + str-length($sep));
     @return ($pre str-split($post, $sep));
 }
 
@@ -59,7 +59,7 @@
 /// @arg $str - input string
 /// @arg $prefix - substring prefix
 @function str-starts-with($str, $prefix) {
-    @return str-slice($str, 1, length($prefix) + 2) == $prefix;
+    @return str-slice($str, 1, str-length($prefix)) == $prefix;
 }
 
 /// Checks if string ends with given sub-string
@@ -75,4 +75,22 @@
     @return $end == $suffix;
 }
 
+
+/// Interpolate all substitution elements in the given template string.
+/// Interpolation points in the template string are identified as $1, $2, $3, etc
+/// and $subs is a (linked-) list of values.
+///
+/// @arg $st - Template string.
+/// @arg $subs - (linked-)list of substitution values.
+@function str-interpolate($st, $subs) {
+    $subs: coerce-to-lst($subs);
+    $idx: 1;
+    @while $subs != null {
+        $sub: car($subs);
+        $subs: cdr($subs);
+        $st: str-replace($st, '$#{$idx}', $sub);
+        $idx: $idx + 1;
+    }
+    @return $st;
+}
 
