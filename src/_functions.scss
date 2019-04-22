@@ -117,6 +117,13 @@
     @return $a + $b;
 }
 
+/// Reverse addition (useful for strings)
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function radd($a, $b) {
+    @return $b + $a;
+}
+
 /// Subtract two numbers
 /// @arg $a - First argument
 /// @arg $b - Second argument
@@ -134,6 +141,13 @@
 /// @arg $b - Second argument
 @function mul($a, $b) {
     @return $a * $b;
+}
+
+/// Reverse multiplication
+/// @arg $a - First argument
+/// @arg $b - Second argument
+@function mul($a, $b) {
+    @return $b * $a;
 }
 
 /// Divide two numbers

@@ -249,7 +249,14 @@ $do: assert-eq(map-exclude($map, L('foo')), ('ham': 'spam'));
 
 $do: assert-eq(map-filter-values(ge, (a: 1, b: 2, c: 3), 2), (b: 2, c: 3));
 
+$do: assert-eq(map-apply-values(abs, (a: 1, b: -2, c: -3)), (a: 1, b: 2, c: 3));
 $do: assert-eq(map-apply-values(mul, (a: 1, b: 2, c: 3), 2), (a: 2, b: 4, c: 6));
+
+$do: assert-eq(map-apply-keys(to-upper-case, (a: 1, b: 2, c: -3)), (A: 1, B: 2, C: -3));
+$do: assert-eq(map-apply-keys(add, (a: 1, b: 2, c: 3), 'a'), (aa: 1, ba: 2, ca: 3));
+
+$do: assert-eq(map-prefix-keys((a: 1, b: 2), 'v'), (va: 1, vb: 2));
+$do: assert-eq(map-prefix-keys((a: 1, b: 2), 'v', 'r'), (va: 1, vb: 2, ra: 1, rb: 2));
 
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('foo')), 'bar');
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('bar')), 'foo');
@@ -257,6 +264,10 @@ $do: assert-eq(map-path-merge(L($map-2, $map-1), L('ham')), ('spam': 'eggs', 'an
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham')), ('spam': 'ham', 'answer': 42));
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham', 'spam')), 'ham');
 $do: assert-eq(map-path-merge(L($map-2, $map-1), L('ham', 'spam')), 'eggs');
+
+$do: assert-eq(map-merge-many(L((1: 2), (3: 4), (5: 6))), (1: 2, 3: 4, 5: 6));
+$do: assert-eq(map-merge-many(L((1: 2), (3: 4), (3: 3, 5: 6))), (1: 2, 3: 3, 5: 6));
+
 
 //------------------------------------------------------------------------------
 // STRING FUNCTIONS

@@ -40,7 +40,7 @@
 /// @arg $xs - Input list
 /// @arg $sep - Optional separator
 @function str-join($xs, $sep: '') {
-    $xs: to-lst($xs);
+    $xs: coerce-to-lst($xs);
     $xs: if($sep == '', $xs, lst-intersperse($xs, $sep));
     @return lst-join-by(add, '', $xs);
 }
@@ -85,7 +85,7 @@
 @function str-interpolate($st, $subs) {
     $subs: coerce-to-lst($subs);
     $idx: 1;
-    @while $subs != null {
+    @while $subs {
         $sub: car($subs);
         $subs: cdr($subs);
         $st: str-replace($st, '$#{$idx}', $sub);

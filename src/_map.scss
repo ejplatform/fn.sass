@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 @import 'list';
 
+$fn-empty-map: map-remove((), null);
+
 /// Return value if key exists on map, otherwise return default.
 ///
 /// @arg $map - map to operate from
@@ -193,6 +195,35 @@
     @return $result;
 }
 
+/// Apply function to the keys of a given map.
+///
+/// @arg $fn - Function
+/// @arg $map - Input map
+@function map-apply-keys($fn, $map, $args...) {
+    $fn: as-func($fn);
+    $acc: $fn-empty-map;
+    @each $k, $v in $map {
+        $acc: map-merge($acc, (call($fn, $k, $args...): $v));
+    }
+    @return $acc;
+}
+
+@function _fn-with-prefix($x, $prefix) {
+    @return '#{$prefix}#{$x}';
+}
+
+/// Add prefixes to all keys of map
+///
+/// @arg $map - Input map
+/// @arg $prefixes... - Strings to add as prefix
+@function map-prefix-keys($map, $prefixes...) {
+    $res: map-remove((), null);
+    @each $prefix in $prefixes {
+        $res: map-merge($res, map-apply-keys(_fn-with-prefix, $map, $prefix));
+    }
+    @return $res;
+}
+
 /// Extract information on $path from a (linked-)list of multiple $maps.
 ///
 /// This function is useful to implement access to nested configuration maps,
@@ -210,9 +241,9 @@
     }
 
     //noinspection CssInvalidFunction
-    @while $maps != null {
-        $map: car($maps);
-        $maps: cdr($maps);
+    @while $maps {
+        $map: nth($maps, 1);
+        $maps: nth($maps, 2);
         $default: _fn-merge-default($default, map-path($map, $path));
     }
 
@@ -233,6 +264,33 @@
     } @else {
         @return $new;
     }
+}
+
+/// Merge a (linked-)list of maps
+///
+/// @arg $maps - List of maps
+@function map-merge-many($maps) {
+    $maps: to-lst($maps);
+
+    @if $maps == null {
+        @return $fn-empty-map;
+    }
+
+    @while nth($maps, 2) {
+        $res: null;
+
+        @while $maps {
+            $map: nth($maps, 1);
+            $maps: nth($maps, 2);
+            @if $maps {
+                $map: map-merge(nth($maps, 1), $map);
+                $maps: nth($maps, 2);
+            }
+            $res: ($map $res);
+        }
+        $maps: $res;
+    }
+    @return nth($maps, 1);
 }
 
 //------------------------------------------------------------------------------
