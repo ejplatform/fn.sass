@@ -266,32 +266,6 @@ $fn-empty-map: map-remove((), null);
     }
 }
 
-/// Merge a (linked-)list of maps
-///
-/// @arg $maps - List of maps
-@function map-merge-many($maps) {
-    $maps: to-lst($maps);
-
-    @if $maps == null {
-        @return $fn-empty-map;
-    }
-
-    @while nth($maps, 2) {
-        $res: null;
-
-        @while $maps {
-            $map: nth($maps, 1);
-            $maps: nth($maps, 2);
-            @if $maps {
-                $map: map-merge(nth($maps, 1), $map);
-                $maps: nth($maps, 2);
-            }
-            $res: ($map $res);
-        }
-        $maps: $res;
-    }
-    @return nth($maps, 1);
-}
 
 //------------------------------------------------------------------------------
 // Auxiliary non-api functions

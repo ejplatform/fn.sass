@@ -1,7 +1,7 @@
 @import '../../src/fn';
 
-$repeat: 5000 !default;
-$size: 10;
+$repeat: 50 !default;
+$size: 1000;
 $xs: lst-zip(lst-range(1, $size), lst-repeat(42, $size));
 
 @for $n from 0 to $repeat {
