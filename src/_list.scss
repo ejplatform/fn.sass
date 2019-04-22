@@ -314,6 +314,31 @@ $fn-empty-array: join((), (), comma);
     @return _lst-map(as-func($fn), to-lst($xs), $args);
 }
 
+/// Create a list of fn($x) for each $x in $xs.
+/// Differently from lst-map, this function applies $x **after** the extra
+/// arguments.
+///
+/// Any additional arguments are passed to the function during function
+/// application.
+///
+/// @arg $fn - Function name or handle
+/// @arg $xs - List
+@function lst-rmap($fn, $xs, $args...) {
+    @if length($args) == 0 {
+        @return lst-map($fn, $xs);
+    }
+    $fn: as-func($fn);
+    $xs: to-lst($xs);
+    $ys: null;
+    @while $xs {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        $args-all: append($args, $x);
+        $ys: (call($fn, $args-all...) $ys);
+    }
+    @return _lst-reverse($ys);
+}
+
 /// Create a list of fn($position, $x) for each $x in $xs. Position starts
 /// counting at 1.
 ///

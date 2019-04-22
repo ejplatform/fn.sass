@@ -106,6 +106,9 @@ $do: assert-eq(lst-map(is-even, L(1, 2, 3, 4)), L(false, true, false, true));
 $do: assert-eq(lst-map(incr, lst-range(1, 10)), lst-range(2, 11));
 $do: assert-eq(lst-map(mul, $xs, 2), L(2, 4, 6));
 
+$do: assert-eq(lst-rmap(div, $xs, 12), L(12, 6, 4));
+$do: assert-eq(lst-rmap(abs, L(-1, -2, -3)), L(1, 2, 3));
+
 $do: assert-eq(lst-index-map(div, $xs), L(1, 1, 1));
 $do: assert-eq(lst-index-map(mul, $xs), L(1, 4, 9));
 
