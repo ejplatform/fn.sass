@@ -180,7 +180,6 @@ $do: assert-eq(lst-to-map(L(1 2, 3 4, 5 6, 7 8, 9 10)), (1: 2, 3: 4, 5: 6, 7: 8,
 $do: assert-eq(length(lst-to-map(lst-zip($xs-large, $xs-large))), 60);
 $do: assert-eq(lst-to-map(L(1 2, 1 3, 2 5)), (1: 3, 2: 5));
 
-
 //------------------------------------------------------------------------------
 // NUMERIC FUNCTIONS
 //------------------------------------------------------------------------------
@@ -279,8 +278,6 @@ $do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham')), ('spam': 'ham', 'ans
 $do: assert-eq(map-path-merge(L($map-1, $map-2), L('ham', 'spam')), 'ham');
 $do: assert-eq(map-path-merge(L($map-2, $map-1), L('ham', 'spam')), 'eggs');
 
-
-
 //------------------------------------------------------------------------------
 // STRING FUNCTIONS
 //------------------------------------------------------------------------------
@@ -306,6 +303,34 @@ $do: assert-eq(str-replace('foo-$1', '$1', 'bar'), 'foo-bar');
 
 $do: assert-eq(str-interpolate('$1-$2', L(foo, bar)), 'foo-bar');
 $do: assert-eq(str-interpolate('hello $1!', L('world')), 'hello world!');
+
+//------------------------------------------------------------------------------
+// COLORS
+//------------------------------------------------------------------------------
+
+$do: assert-eq(luminance(white), 1.0);
+$do: assert-eq(luminance(black), 0.0);
+$do: assert-simeq(luminance(red), 0.212, $tol: 0.001);
+$do: assert-simeq(luminance(green), 0.154, $tol: 0.001);
+$do: assert-simeq(luminance(blue), 0.072, $tol: 0.001);
+
+@each $c1 in (white, black, red, green, blue) {
+    $do: assert-simeq(contrast-ratio($c1, $c1), 0.0, $msg: $c1);
+    @each $c2 in (white, black, red, green, blue) {
+        $do: assert-simeq(contrast-ratio($c1, $c2), contrast-ratio($c2, $c1));
+    }
+}
+
+$do: assert-simeq(contrast-ratio(black, white), 1.0, $tol: 0.001);
+$do: assert-simeq(contrast-ratio(white, black), 1.0, $tol: 0.001);
+$do: assert-gt(contrast-ratio(blue, red), contrast-ratio(red, green));
+$do: assert-gt(contrast-ratio(red, white), contrast-ratio(red, black));
+
+$do: assert-eq(choose-contrast-color(white), black);
+$do: assert-eq(choose-contrast-color(black), white);
+$do: assert-eq(choose-contrast-color(blue), white);
+$do: assert-eq(choose-contrast-color(red), black);
+$do: assert-eq(choose-contrast-color(green), black);
 
 /*
  * ALL TESTS FINISHED SUCCESSFULLY :)

@@ -1,6 +1,6 @@
 {
   "name": "fn.sass",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Functional programming in Sass.",
   "homepage": "https://fabiommendes.github.io/fn.sass/",
   "repository": "https://github.com/fabiommendes/fn.sass/",
@@ -47,10 +47,13 @@
     "clean": "rm dist -rfv",
     "watch": "onchange src -- run-p test",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
-    "test": "node-sass test/tests.scss || tests src/tests.scss",
+    "test": "node-sass tests/tests.scss || sassc tests/tests.scss",
+    "testn": "node-sass tests/tests.scss",
+    "testc": "sassc tests/tests.scss",
     "benchmarks": "tests benchmarks/tests.scss",
-    "check": "sassc src/_tests.scss",
-    "precommit": "run-p lint test docs"
+    "precommit": "run-p lint test docs",
+    "prerelease": "run-s test docs"
+
   },
   "resolutions": {
     "natives": "1.1.3"

@@ -18,6 +18,37 @@
     @return $fst;
 }
 
+/// Assert fn returns true when called with both arguments.
+///
+/// @arg $fn - Function
+/// @arg $fst - First argument
+/// @arg $snd - Second argument
+/// @arg $msg - Optional message
+/// @example scss
+///     $do: assert-fn(gt, 2, 3);
+@function assert-fn($fn, $fst, $snd, $msg: 'Assertion error') {
+    @if not call-fn($fst, $snd) {
+        @error '#{$msg}: condition #{$fn} not met with "#{inspect($snd)}" and "#{inspect($fst)}".';
+    }
+    @return $fst;
+}
+
+@function assert-gt($fst, $snd, $msg:'Assertion error') {
+    @return assert-fn(gt, $fst, $snd, $msg)
+}
+
+@function assert-lt($fst, $snd, $msg:'Assertion error') {
+    @return assert-fn(lt, $fst, $snd, $msg)
+}
+
+@function assert-ge($fst, $snd, $msg:'Assertion error') {
+    @return assert-fn(ge, $fst, $snd, $msg)
+}
+
+@function assert-le($fst, $snd, $msg:'Assertion error') {
+    @return assert-fn(le, $fst, $snd, $msg)
+}
+
 /// Assert approximate numerical equality
 ///
 /// @arg $fst - First argument
