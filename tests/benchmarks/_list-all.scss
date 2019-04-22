@@ -1,0 +1,13 @@
+@import '../../src/fn';
+
+$repeat: 50 !default;
+$xs: lst-join(lst-repeat(true, 500), lst-repeat(false, 500));
+
+
+@for $n from 0 to $repeat {
+    $n: lst-all($xs);
+    $n: lst-any($xs);
+}
+
+//@warn lst-all($xs);
+

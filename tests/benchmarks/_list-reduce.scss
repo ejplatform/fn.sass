@@ -1,0 +1,12 @@
+@import '../../src/fn';
+
+$repeat: 50 !default;
+$xs: lst-range(1, 1000);
+
+
+@for $n from 0 to $repeat {
+    $n: lst-reduce(add, $xs, 0);
+}
+
+//@warn lst-reduce(add, $xs, 0);
+

@@ -1,0 +1,14 @@
+@import '../../src/fn';
+
+$repeat: 50 !default;
+$xs: lst-range(1, 1000);
+
+@function incr($x) {
+    @return $x + 1;
+}
+
+@for $n from 0 to $repeat {
+    //$n: lst-map(add, $xs, 1);
+    $n: lst-map(incr, $xs);
+}
+

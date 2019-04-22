@@ -1,0 +1,11 @@
+@import '../../src/fn';
+
+$repeat: 100 !default;
+$xs: lst-range(1, 1000);
+
+@for $n from 0 to $repeat {
+    $ys: lst-to-array($xs);
+}
+
+//@warn lst-all($xs);
+

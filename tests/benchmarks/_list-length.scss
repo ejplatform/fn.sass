@@ -1,0 +1,9 @@
+@import '../../src/fn';
+
+$repeat: 100 !default;
+$xs: lst-range(1, 100);
+
+@for $n from 0 to $repeat {
+    $n: lst-length($xs)
+}
+

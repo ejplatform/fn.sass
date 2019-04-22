@@ -1,0 +1,15 @@
+// Linked lists performance.
+//
+// Result: The cons function creates an overhead and executes more than 2x
+// slower in libsass as the raw (head tail) syntax.
+//
+// Ruby sass is about 100-200x slower and fails with lists as short as $N: 4000.
+// However, both styles execute with the same speed.
+@import '../src/fn';
+
+$N: 3000;
+$lst: null;
+@for $i from 0 to $N {
+    //$lst: cons($i, $lst);
+    $lst: ($i $lst);
+}

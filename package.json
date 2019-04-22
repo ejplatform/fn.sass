@@ -47,7 +47,8 @@
     "clean": "rm dist -rfv",
     "watch": "onchange src -- run-p test",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
-    "test": "node-sass src/_tests.scss || sassc src/_tests.scss",
+    "test": "node-sass test/tests.scss || tests src/tests.scss",
+    "benchmarks": "tests benchmarks/tests.scss",
     "check": "sassc src/_tests.scss",
     "precommit": "run-p lint test docs"
   },
