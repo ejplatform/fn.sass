@@ -762,60 +762,37 @@ $fn-empty-map: map-remove((), null) !default;
 ///
 /// @arg $maps - List of maps
 @function lst-flatten-map($maps, $_join-size: 64) {
-    @if $maps == null {
+    @if not $maps {
         @return $fn-empty-map;
-    } @else if nth($maps, 2) == null {
-        @return nth($maps, 1);
     }
-
-    $res: null;
-    $acc: $fn-empty-map;
-    $size: 0;
-
-    @while $maps {
-        $a: nth($maps, 1);
-        $maps: nth($maps, 2);
-        $n: length($a);
-        @if $n + $size <= $_join-size {
-            $size: $size + $n;
-            $acc: map-merge($acc, $a);
-        } @else if $size >= $_join-size {
-            $res: ($acc ($a ($res)));
-            $size: 0;
-            $acc: $fn-empty-map;
-        } @else {
-            $res: ($acc ($res));
-            $size: $n;
-            $acc: $a;
+    @while nth($maps, 2) {
+        $new: null;
+        @while $maps {
+            $map: nth($maps, 1);
+            $maps: nth($maps, 2);
+            @if $maps {
+                $map: map-merge($map, nth($maps, 1));
+                $maps: nth($maps, 2);
+            }
+            $new: ($map $new);
         }
+        $maps: _lst-reverse($new);
     }
-    @if length($acc) != 0 {
-        $res: ($acc $res);
-    }
-    @return lst-flatten-map(_lst-reverse($res), $_join-size: 2 * $_join-size);
+    @return nth($maps, 1);
 }
-
-
 
 /// Transform list of pairs into a map
 ///
 /// @arg $xs - List
 @function lst-to-map($xs) {
-    @if $xs == null {
-        @return ();
-    } @else if nth($xs, 2) == null {
-        @return (nth($xs, 1),);
-    }
-
-    // Collect partial sub-arrays
     $maps: null;
     @while $xs {
-        $aux: _lst-consume-pairs($xs);
+        $aux: _lst-consume-pairs($xs, 16);
         $map: nth($aux, 1);
         $xs: nth($aux, 2);
         $maps: ($map $maps);
     }
-    @return lst-flatten($maps);
+    @return lst-flatten-map($maps);
 }
 
 /// Coerce object to list. Lists are returned as is.

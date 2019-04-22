@@ -1,4 +1,5 @@
 /// Ugly performance-enhancing functions for lists
+$fn-empty-map: map-remove((), null) !default;
 
 // Consume 8 elements of list and return (elem-array, tail)
 @function _lst-consume($xs) {
@@ -61,86 +62,15 @@
     @return ($x1, $x2, $x3, $x4, $x5, $x6, $x7, $x8), $xs;
 }
 
-// Consume 8 elements from a list of pairs and return (elem-map, tail)
-@function _lst-consume-pairs($xs) {
-    @if not $xs {
-        @return (), null;
+// Consume n elements from a list of pairs and return (elem-map, tail)
+@function _lst-consume-pairs($xs, $n: 16) {
+    $res: $fn-empty-map;
+    @while $xs and $n > 0 {
+        $x: nth($xs, 1);
+        $xs: nth($xs, 2);
+        $res: map-merge($res, (nth($x, 1): nth($x, 2)));
+        $n: $n - 1;
     }
-
-    // Length 1
-    $x: nth($xs, 1);
-    $k1: nth($x, 1);
-    $v1: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1), null;
-    }
-
-    // Length 2
-    $x: nth($xs, 1);
-    $k2: nth($x, 1);
-    $v2: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1, $k2: $v2), null;
-    }
-
-    // Length 3
-    $x: nth($xs, 1);
-    $k3: nth($x, 1);
-    $v3: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1, $k2: $v2, $k3: $v3), null;
-    }
-
-    // Length 4
-    $x: nth($xs, 1);
-    $k4: nth($x, 1);
-    $v4: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4), null;
-    }
-
-    // Length 5
-    $x: nth($xs, 1);
-    $k5: nth($x, 1);
-    $v5: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4, $k5: $v5), null;
-    }
-
-    // Length 6
-    $x: nth($xs, 1);
-    $k6: nth($x, 1);
-    $v6: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4, $k5: $v5, $k6: $v6), null;
-    }
-
-    // Length 7
-    $x: nth($xs, 1);
-    $k7: nth($x, 1);
-    $v7: nth($x, 2);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return (
-            $k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4,
-            $k5: $v5, $k6: $v6, $k7: $v7,
-        ), null;
-    }
-
-    // Length 8
-    $x: nth($xs, 1);
-    $k8: nth($x, 1);
-    $v8: nth($x, 2);
-    $xs: nth($xs, 2);
-    @return (
-        $k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4,
-        $k5: $v5, $k6: $v6, $k7: $v7, $k8: $v8,
-    ), $xs;
+    @return $res, $xs;
 }
 
