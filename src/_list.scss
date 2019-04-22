@@ -4,9 +4,11 @@
 /// @author Fábio Macêdo Mendes
 ////////////////////////////////////////////////////////////////////////////////
 @import 'functions';
+@import 'list-perf';
 
 $_fn-list-not-given: unique-id() !default;
-$fn-empty-array: join((), (), comma);
+$fn-empty-array: join((), (), comma) !default;
+$fn-empty-map: map-remove((), null) !default;
 
 // BASIC -----------------------------------------------------------------------
 
@@ -688,71 +690,10 @@ $fn-empty-array: join((), (), comma);
     @return if($reverse, $xs, _lst-reverse($xs));
 }
 
-// Consume 8 elements of list and return (elem-array, tail)
-@function _lst-consume($xs) {
-    @if not $xs {
-        @return (), null;
-    }
-
-    // Length 1
-    $x1: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1,), null;
-    }
-
-    // Length 2
-    $x2: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2), null;
-    }
-
-    // Length 3
-    $x3: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2, $x3), null;
-    }
-
-    // Length 4
-    $x4: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2, $x3, $x4), null;
-    }
-
-    // Length 5
-    $x5: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2, $x3, $x4, $x5), null;
-    }
-
-    // Length 6
-    $x6: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2, $x3, $x4, $x5, $x6), null;
-    }
-
-    // Length 7
-    $x7: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @if not $xs {
-        @return ($x1, $x2, $x3, $x4, $x5, $x6, $x7), null;
-    }
-
-    // Length 8
-    $x8: nth($xs, 1);
-    $xs: nth($xs, 2);
-    @return ($x1, $x2, $x3, $x4, $x5, $x6, $x7, $x8), $xs;
-}
-
 /// Flatten a list of arrays
 ///
 /// @arg $as - List of arrays
-@function lst-flatten($as, $_join-size: 64) {
+@function lst-flatten($as, $_join-size: 128) {
     @if $as == null {
         @return $fn-empty-array;
     } @else if nth($as, 2) == null {
@@ -798,28 +739,81 @@ $fn-empty-array: join((), (), comma);
 
     // Collect partial sub-arrays
     $arrays: null;
-    $n: 0;
-    $last: $fn-empty-array;
     @while $xs {
         $aux: _lst-consume($xs);
         $arr: nth($aux, 1);
         $xs: nth($aux, 2);
+        @if $xs {
+            $aux: _lst-consume($xs);
+            $arr: join($arr, nth($aux, 1));
+            $xs: nth($aux, 2);
+            @if $xs {
+                $aux: _lst-consume($xs);
+                $arr: join($arr, nth($aux, 1));
+                $xs: nth($aux, 2);
+            }
+        }
         $arrays: ($arr $arrays);
-        $n: $n + 1;
     }
-    @return lst-flatten($arrays);
+    @return lst-flatten(_lst-reverse($arrays));
 }
 
-@function _fn-map-from-pair($pair) {
-    @return (nth($pair, 1): nth($pair, 2));
+/// Flatten a list of maps
+///
+/// @arg $maps - List of maps
+@function lst-flatten-map($maps, $_join-size: 64) {
+    @if $maps == null {
+        @return $fn-empty-map;
+    } @else if nth($maps, 2) == null {
+        @return nth($maps, 1);
+    }
+
+    $res: null;
+    $acc: $fn-empty-map;
+    $size: 0;
+
+    @while $maps {
+        $a: nth($maps, 1);
+        $maps: nth($maps, 2);
+        $n: length($a);
+        @if $n + $size <= $_join-size {
+            $size: $size + $n;
+            $acc: map-merge($acc, $a);
+        } @else if $size >= $_join-size {
+            $res: ($acc ($a ($res)));
+            $size: 0;
+            $acc: $fn-empty-map;
+        } @else {
+            $res: ($acc ($res));
+            $size: $n;
+            $acc: $a;
+        }
+    }
+    @if length($acc) != 0 {
+        $res: ($acc $res);
+    }
+    @return lst-flatten-map(_lst-reverse($res), $_join-size: 2 * $_join-size);
 }
 
 /// Transform list of pairs into a map
 ///
 /// @arg $xs - List
 @function lst-to-map($xs) {
-    $xs: lst-map(_fn-map-from-pair, $xs);
-    @return lst-join-by(map-merge, (), $xs);
+    @if $xs == null {
+        @return ();
+    } @else if nth($xs, 2) == null {
+        @return (nth($xs, 1),);
+    }
+
+    // Collect partial sub-arrays
+    $maps: null;
+    @while $xs {
+        $aux: _lst-consume-pairs($xs);
+        $map: nth($aux, 1);
+        $xs: nth($aux, 2);
+        $maps: ($map $maps);
+    }
+    @return lst-flatten($maps);
 }
 
 /// Coerce object to list. Lists are returned as is.

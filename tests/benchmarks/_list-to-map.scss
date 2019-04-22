@@ -1,0 +1,12 @@
+@import '../../src/fn';
+
+$repeat: 5000 !default;
+$size: 10;
+$xs: lst-zip(lst-range(1, $size), lst-repeat(42, $size));
+
+@for $n from 0 to $repeat {
+    $ys: lst-to-map($xs);
+}
+
+//@warn lst-all($xs);
+

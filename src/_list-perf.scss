@@ -1,0 +1,146 @@
+/// Ugly performance-enhancing functions for lists
+
+// Consume 8 elements of list and return (elem-array, tail)
+@function _lst-consume($xs) {
+    @if not $xs {
+        @return (), null;
+    }
+
+    // Length 1
+    $x1: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1,), null;
+    }
+
+    // Length 2
+    $x2: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2), null;
+    }
+
+    // Length 3
+    $x3: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2, $x3), null;
+    }
+
+    // Length 4
+    $x4: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2, $x3, $x4), null;
+    }
+
+    // Length 5
+    $x5: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2, $x3, $x4, $x5), null;
+    }
+
+    // Length 6
+    $x6: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2, $x3, $x4, $x5, $x6), null;
+    }
+
+    // Length 7
+    $x7: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($x1, $x2, $x3, $x4, $x5, $x6, $x7), null;
+    }
+
+    // Length 8
+    $x8: nth($xs, 1);
+    $xs: nth($xs, 2);
+    @return ($x1, $x2, $x3, $x4, $x5, $x6, $x7, $x8), $xs;
+}
+
+// Consume 8 elements from a list of pairs and return (elem-map, tail)
+@function _lst-consume-pairs($xs) {
+    @if not $xs {
+        @return (), null;
+    }
+
+    // Length 1
+    $x: nth($xs, 1);
+    $k1: nth($x, 1);
+    $v1: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1), null;
+    }
+
+    // Length 2
+    $x: nth($xs, 1);
+    $k2: nth($x, 1);
+    $v2: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1, $k2: $v2), null;
+    }
+
+    // Length 3
+    $x: nth($xs, 1);
+    $k3: nth($x, 1);
+    $v3: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1, $k2: $v2, $k3: $v3), null;
+    }
+
+    // Length 4
+    $x: nth($xs, 1);
+    $k4: nth($x, 1);
+    $v4: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4), null;
+    }
+
+    // Length 5
+    $x: nth($xs, 1);
+    $k5: nth($x, 1);
+    $v5: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4, $k5: $v5), null;
+    }
+
+    // Length 6
+    $x: nth($xs, 1);
+    $k6: nth($x, 1);
+    $v6: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return ($k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4, $k5: $v5, $k6: $v6), null;
+    }
+
+    // Length 7
+    $x: nth($xs, 1);
+    $k7: nth($x, 1);
+    $v7: nth($x, 2);
+    $xs: nth($xs, 2);
+    @if not $xs {
+        @return (
+            $k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4,
+            $k5: $v5, $k6: $v6, $k7: $v7,
+        ), null;
+    }
+
+    // Length 8
+    $x: nth($xs, 1);
+    $k8: nth($x, 1);
+    $v8: nth($x, 2);
+    $xs: nth($xs, 2);
+    @return (
+        $k1: $v1, $k2: $v2, $k3: $v3, $k4: $v4,
+        $k5: $v5, $k6: $v6, $k7: $v7, $k8: $v8,
+    ), $xs;
+}
+
