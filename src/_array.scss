@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 @import 'functions';
 
-$_fn-array-not-given: unique-id() !default;
+$fn-array-not-given: unique-id() !default;
 
 /// Return array of a single element.
 ///
@@ -101,17 +101,16 @@ $_fn-array-not-given: unique-id() !default;
 /// signature, i.e., fn($x, $init, ...)
 ///
 /// @arg $fn - A binary operator function
-/// @arg $xs - List
+/// @arg $arr - List
 /// @arg $init - Initial value of reduction
-@function reduce($fn, $arr, $init: $_fn-array-not-given, $args...) {
+@function reduce($fn, $arr, $init: $fn-array-not-given, $args...) {
     $fn: as-func($fn);
     $y: $init;
     @each $x in $arr {
-        $y: if($y == $_fn-array-not-given, $x, call($fn, $x, $y, $args...));
+        $y: if($y == $fn-array-not-given, $x, call($fn, $x, $y, $args...));
     }
-    @if $y == $_fn-array-not-given {
+    @if $y == $fn-array-not-given {
         @error "Empty array";
     }
     @return $y;
 }
-

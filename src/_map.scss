@@ -59,7 +59,6 @@ $fn-empty-map: map-remove((), null);
 ///                      (foo: (y: 2, z: 3), bar: baz));
 ///     // (foo: (x: 1, y: 2, z: 3), bar: baz)
 @function map-merge-nested($map1, $map2) {
-    $map-fields-merged: ();
     $result: map-merge($map1, $map2);
 
     // Merge sub-maps from map1
@@ -67,6 +66,43 @@ $fn-empty-map: map-remove((), null);
         @if type-of($value) == map and map-has-key($map2, $key) {
             $value: map-merge($value, map-get($map2, $key));
             $result: map-merge($result, ($key: $value));
+        }
+    }
+    @return $result;
+}
+
+/// Merge two maps with arbitrary nesting.
+///
+/// Maps are merged. If a value is a map in one dictionary, but not in the
+/// other, it is merged and saved into the ($key-name: $value). Null values
+/// are omitted.
+///
+/// @arg $map1
+/// @arg $map2
+///
+/// @example scss
+///     map-merge-nested((foo: (x: 1, y: (z: 3)),
+///                      (foo: (y: (w: 4), bar: baz));
+///     // (foo: (x: 1, y: (z: 3, w: 4), bar: baz)
+@function map-merge-deep($map1, $map2, $key: value) {
+    $result: map-merge($map1, $map2);
+
+    // Merge sub-maps from map1
+    @each $k, $v1 in $map1 {
+        $v2: map-get($map2, $k);
+        @if type-of($v1) == map and type-of($v2) == map {
+            $value: map-merge-deep($v1, $v2, $key);
+            $result: map-merge($result, ($k: $value));
+        } @else if type-of($v1) == map {
+            @if $v2 != null and $key != null {
+                $value: map-merge($v1, ($key: $v2));
+                $result: map-merge($result, ($k: $value));
+            } @else {
+                $result: map-merge($result, ($k: $v1));
+            }
+        } @else if type-of($v2) == map and $v1 != null and $key != null {
+            $value: map-merge(($key: $v1), $v2);
+            $result: map-merge($result, ($k: $value));
         }
     }
     @return $result;
@@ -265,7 +301,6 @@ $fn-empty-map: map-remove((), null);
         @return $new;
     }
 }
-
 
 //------------------------------------------------------------------------------
 // Auxiliary non-api functions
