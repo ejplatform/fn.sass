@@ -135,6 +135,86 @@ $fn-empty-array: join((), (), comma) !default;
     @return ($as, $bs);
 }
 
+// CHUNKED ITERATION -----------------------------------------------------------
+// This will be the basis of a series of optimizations for map, filter, etc.
+// Chunked iteration allow us to limit the O(n^2) behavior of those functions
+// to a more scalable linear behavior. For small arrays (but how small?),
+// quadratic behavior is faster than linear.
+
+/// Convert array to a (linked-)list of array chunks.
+///
+/// @arg $arr - Array
+/// @arg $n - Chunk size
+/// @arg $reverse - True to include chunks in reverse order (faster)
+@function chunks($arr, $n, $reverse: false) {
+    $size-plus-one: length($arr) + 1;
+    $chunks: null;
+    $end: 1;
+    @while $end < $size-plus-one {
+        $chunk: $fn-empty-array;
+        @if $n == 8 and $size-plus-one >= $end + 8 {
+            $chunk: (
+                nth($arr, $end),
+                nth($arr, $end + 1),
+                nth($arr, $end + 2),
+                nth($arr, $end + 3),
+                nth($arr, $end + 4),
+                nth($arr, $end + 5),
+                nth($arr, $end + 6),
+                nth($arr, $end + 7),
+            )
+        } @else {
+            @for $i from $end to min($end + $n, $size-plus-one) {
+                $chunk: append($chunk, nth($arr, $i));
+            }
+        }
+        $chunks: ($chunk $chunks);
+        $end: $end + $n;
+    }
+    @return if($reverse, $chunks, lst-reverse($chunks));
+}
+
+/// Join a (linked-) list of chunks created by the chunks function.
+///
+/// @arg $chunks - List of chunks
+/// @arg $reverse - True if chunks are included in reverse order
+@function join-chunks($chunks, $reverse: false) {
+    @if not $chunks {
+        @return $fn-empty-array;
+    }
+
+    $a1: nth($chunks, 1);
+    $chunks: nth($chunks, 2);
+    @if not $chunks {
+        @return $a1;
+    }
+
+    $a2: nth($chunks, 1);
+    $chunks: nth($chunks, 2);
+    @if not $chunks {
+        @return if($reverse, join($a2, $a1), join($a1, $a2));
+    }
+
+    $a3: nth($chunks, 1);
+    $chunks: nth($chunks, 2);
+    @if not $chunks {
+        @return if($reverse, join(join($a3, $a2), $a1), join(join($a1, $a2), $a3));
+    }
+
+    $a4: nth($chunks, 1);
+    $chunks: nth($chunks, 2);
+    $prefix: if($reverse,
+        join(join($a4, $a3), join($a2, $a1)),
+        join(join($a1, $a2), join($a3, $a4))
+    );
+    @if not $chunks {
+        @return $prefix;
+    }
+    @return if($reverse,
+        join(join-chunks($chunks), $prefix, comma),
+        join($prefix, join-chunks($chunks), comma));
+}
+
 // CONVERSIONS -----------------------------------------------------------------
 
 /// Convert value to list.
