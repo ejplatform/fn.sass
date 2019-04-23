@@ -220,6 +220,17 @@ $do: assert-eq(slice($arr, 2), (2 3 4)); // sneaky removal of commas...
 $do: assert-eq(slice($arr, 2, 3), (2 3));
 
 $do: assert-eq(reduce(add, $arr), 10);
+$do: assert-eq(reduce(mul, $arr), 24);
+$do: assert-eq(reduce(mul, $arr, 5), 120);
+
+$do: assert-eq(map(mul, $arr, 2), (2, 4, 6, 8));
+$do: assert-eq(map(incr, $arr), (2, 3, 4, 5));
+
+$do: assert-eq(filter(is-even, $arr), (2, 4));
+$do: assert-eq(filter(gt, $arr, 2), (3, 4));
+
+$do: assert-eq(separate(is-even, $arr), ((2, 4), (1, 3)));
+$do: assert-eq(separate(gt, $arr, 2), ((3, 4), (1, 2)));
 
 $do: assert-eq(to-array((1: 2, 3: 4)), (1 2, 3 4));
 

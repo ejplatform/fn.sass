@@ -6,6 +6,9 @@
 @import 'functions';
 
 $fn-array-not-given: unique-id() !default;
+$fn-empty-array: join((), (), comma) !default;
+
+// BASIC FUNCTIONS -------------------------------------------------------------
 
 /// Return array of a single element.
 ///
@@ -64,6 +67,76 @@ $fn-array-not-given: unique-id() !default;
     }
 }
 
+// CLASSIC FP FUNCTIONS --------------------------------------------------------
+
+/// Apply function to every element of array.
+///
+/// @arg $fn - A binary operator function
+/// @arg $arr - Array
+@function map($fn, $arr, $args...) {
+    $fn: as-func($fn);
+    $ys: $fn-empty-array;
+    @each $x in $arr {
+        $ys: append($ys, call($fn, $x, $args...));
+    }
+    @return $ys;
+}
+
+/// Keep only elements of array that pass predicate function.
+///
+/// @arg $fn - A binary operator function
+/// @arg $arr - Array
+@function filter($fn, $arr, $args...) {
+    $fn: as-func($fn);
+    $ys: $fn-empty-array;
+    @each $x in $arr {
+        @if call($fn, $x, $args...) {
+            $ys: append($ys, $x);
+        }
+    }
+    @return $ys;
+}
+
+/// Reduce array by function
+///
+/// Arguments are passed in the same order that they appear in the the function
+/// signature, i.e., fn($x, $init, ...)
+///
+/// @arg $fn - A binary operator function
+/// @arg $arr - List
+/// @arg $init - Initial value of reduction
+@function reduce($fn, $arr, $init: $fn-array-not-given, $args...) {
+    $fn: as-func($fn);
+    $y: $init;
+    @each $x in $arr {
+        $y: if($y == $fn-array-not-given, $x, call($fn, $x, $y, $args...));
+    }
+    @if $y == $fn-array-not-given {
+        @error "Empty array";
+    }
+    @return $y;
+}
+
+/// Keep only elements of array that pass predicate function.
+///
+/// @arg $fn - A binary operator function
+/// @arg $arr - Array
+@function separate($fn, $arr, $args...) {
+    $fn: as-func($fn);
+    $as: $fn-empty-array;
+    $bs: $fn-empty-array;
+    @each $x in $arr {
+        @if call($fn, $x, $args...) {
+            $as: append($as, $x);
+        } @else {
+            $bs: append($bs, $x);
+        }
+    }
+    @return ($as, $bs);
+}
+
+// CONVERSIONS -----------------------------------------------------------------
+
 /// Convert value to list.
 /// Lists are returned as-is, maps become list of 2-tuples and other elements
 /// become a list with a single value
@@ -95,22 +168,3 @@ $fn-array-not-given: unique-id() !default;
     @return if(type-of($value) != 'list', ($value,), $value);
 }
 
-/// Reduce array by function
-///
-/// Arguments are passed in the same order that they appear in the the function
-/// signature, i.e., fn($x, $init, ...)
-///
-/// @arg $fn - A binary operator function
-/// @arg $arr - List
-/// @arg $init - Initial value of reduction
-@function reduce($fn, $arr, $init: $fn-array-not-given, $args...) {
-    $fn: as-func($fn);
-    $y: $init;
-    @each $x in $arr {
-        $y: if($y == $fn-array-not-given, $x, call($fn, $x, $y, $args...));
-    }
-    @if $y == $fn-array-not-given {
-        @error "Empty array";
-    }
-    @return $y;
-}
