@@ -5,12 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /// Convert function or string to a function handle.
-@function as-func($key) {
-    @if type-of($key) == string {
+@function as-func($fn) {
+    @if type-of($fn) == function {
+        @return $fn
+    } @else if type-of($fn) == string {
         //noinspection CssInvalidFunction
-        @return get-function($key);
+        @return get-function($fn);
     } @else {
-        @return $key;
+        @error "Invalid function: #{$fn}";
     }
 }
 

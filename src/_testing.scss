@@ -27,10 +27,10 @@
 /// @example scss
 ///     $do: assert-fn(gt, 2, 3);
 @function assert-fn($fn, $fst, $snd, $msg: 'Assertion error') {
-    @if not call-fn($fst, $snd) {
-        @error '#{$msg}: condition #{$fn} not met with "#{inspect($snd)}" and "#{inspect($fst)}".';
+    @if call-fn($fn, $fst, $snd) {
+        @return $fst;
     }
-    @return $fst;
+    @error '#{$msg}: condition #{$fn} not met with "#{inspect($fst)}" and "#{inspect($snd)}".';
 }
 
 @function assert-gt($fst, $snd, $msg:'Assertion error') {

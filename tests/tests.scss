@@ -358,7 +358,7 @@ $do: assert-simeq(luminance(blue), 0.072, $tol: 0.001);
 $do: assert-simeq(contrast-ratio(black, white), 1.0, $tol: 0.001);
 $do: assert-simeq(contrast-ratio(white, black), 1.0, $tol: 0.001);
 $do: assert-gt(contrast-ratio(blue, red), contrast-ratio(red, green));
-$do: assert-gt(contrast-ratio(red, white), contrast-ratio(red, black));
+$do: assert-gt(contrast-ratio(red, black), contrast-ratio(red, white));
 
 $do: assert-eq(choose-contrast-color(white), black);
 $do: assert-eq(choose-contrast-color(black), white);

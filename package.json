@@ -42,18 +42,17 @@
     "node": ">=4"
   },
   "scripts": {
-    "docs": "sassdoc -t flippant src && rm -rfv docs && mv sassdoc docs",
-    "start": "run-p lint test",
+    "benchmarks": "tests benchmarks/tests.scss",
     "clean": "rm dist -rfv",
-    "watch": "onchange src -- run-p test",
+    "docs": "sassdoc -t flippant src && rm -rfv docs && mv sassdoc docs",
     "lint": "sass-lint -c .sasslintrc src --verbose --no-exit && eslint test -c styled && editorconfig-tools check .",
+    "precommit": "run-p lint test docs",
+    "prerelease": "run-s test docs",
     "test": "node-sass tests/tests.scss || sassc tests/tests.scss",
     "testn": "node-sass tests/tests.scss",
     "testc": "sassc tests/tests.scss",
-    "benchmarks": "tests benchmarks/tests.scss",
-    "precommit": "run-p lint test docs",
-    "prerelease": "run-s test docs"
-
+    "start": "run-p lint test",
+    "watch": "onchange src -- run-p test"
   },
   "resolutions": {
     "natives": "1.1.3"

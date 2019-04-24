@@ -10,29 +10,29 @@
 
 ## What is it?
 
-**fn.sass** is a library of functions for functional programming in Sass. Sass
-is a surprisingly versatile programming language and supports many features
-we normally see only in general purpose languages. Sass is Turing complete and has
+**fn.sass** implements basic support for functional programming in Sass. Sass
+is a surprisingly versatile programming language that implements many features
+we normally see only in general purpose languages. It is Turing complete and has
 rich data structures such as lists and maps, that allows it to do much more than
 CSS templating.
 
 
 ## Should I use it?
 
-The short answer is **no**.
+The short answer is **probably not**.
 
 Sass is more powerful than it seems and people had indeed done crazy stuff with
 it <https://hugogiraudel.com/2014/01/20/json-in-sass/>`. If you really
 need to do arbitrary processing in your CSS pre-processor, fn.sass is certainly
 of a great help and can make many things easier.
 
-Sass is a terrible general purpose language, and besides generating CSS, there is
-nothing it can do better or more efficiently that your regular Javascript,
-Python, Ruby, etc. If you can delegate work to a "real" programming language
-for the most complicated bits, by all means please do so.
+That said, Sass is a terrible general purpose language, and besides generating
+CSS, there is nothing it can do better or more efficiently that your regular Javascript,
+Python, Ruby, etc. If you can delegate work to a "real" programming language, by
+all means please do so.
 
 Don't get me wrong. Sass is excellent for its intended use of building CSS.
-It is just when we stretch any language outside of its natural domain, it 
+It is just when we stretch any language outside of its natural domain, it
 always shows its limits.
 
 
@@ -48,27 +48,27 @@ has 3 different types of lists that can be used interchangeably most of time, bu
 fail in some strange corners because they are not considered to be equal to
 each other (`(1 2 3) != (1, 2, 3) != [1, 2, 3]`).
 
-**fn.sass** implements the classic "cons cell" representation of lists just like 
-in LISP or any other functional language. Cons lists can be mapped, filtered, 
+**fn.sass** implements the classic "cons cell" representation of lists just like
+in LISP or any other functional language. Cons lists can be mapped, filtered,
 reduced, etc.
 
 ```scss
-$xs: lst-from-array((1, 1, 2, 3, 5, 8, 13));
+$xs: L(1, 1, 2, 3, 5, 8, 13);   // Create a linked list
 
-$ys: lst-map(sqrt, $xs);        // apply square root to all xs.
-$ys: lst-filter(is-even, $xs);  // keeps only even xs.
-$ys: lst-reduce(add, $xs, 0);   // reduce using add, i.e., sum all xs.
+$ys: lst-map(sqrt, $xs);        // Apply square root to all xs.
+$ys: lst-filter(is-even, $xs);  // Keeps only even xs.
+$ys: lst-reduce(add, $xs, 0);   // Reduce using add, i.e., sum all xs.
 // ... many more
 ```
 
 The cons cell is represented as a pair `(car cdr)`, which is just a Sass list
 without commas. A list is a nested chain of cons cells ending in null, like so:
-`(a (b (c null)))`. Sass renders them somewhat decently as `"a b c null"` (mind
-the trailing null), so I claim is not an entirely awful encoding.
+`L(a, b, c) ==> (a (b (c null)))`. Sass renders them somewhat decently as
+`"a b c null"`, so it is not an entirely awful encoding.
 
 Most functions in this library are concerned with lists, but we also have a few
-utilities related to Sass arrays, maps, strings and numbers. It even sports a 
-very primitive testing framework that is exposed publicly and can be reused in 
+utilities related to Sass arrays, maps, strings and numbers. It even includes a
+very primitive testing framework that is exposed publicly and can be reused in
 your own projects.
 
 See the [documentation](https://fabiommendes.github.io/fn.sass/) for a complete
@@ -79,7 +79,7 @@ list of functions.
 
 Sass occupies a strange space in language design. It uses only immutable data
 structures, which hints at functional programming, but those data structures
-are implemented in a very inefficient way when used with standard FP idioms.
+are implemented in a way that makes them very inefficient to common FP idioms.
 It also claims to have first class functions, although it does not support
 lambdas and closures.
 
@@ -89,10 +89,10 @@ code, but the cleaner approach is perhaps to simply implement linked lists on to
 Sass types.
 
 Having linked lists opens the door to many functional idioms and the next thing
-you are thinking are ways to mimic function composition and partial application. Sass does not
-support that, but most higher order functions in this library accept variadic
+you are thinking are ways to mimic function composition and partial application.
+Sass does not support that, but most higher order functions in this library accept variadic
 arguments that are passed to the function argument whenever it is used. It is
-not like partial application, but it gets the work done:
+not partial application, but it gets the work done:
 
 ```scss
 // Standard map. apply sqrt to all xs.
@@ -101,12 +101,19 @@ $ys: lst-map(sqrt, $xs);
 // Multiply all xs by 2.
 $ys: lst-map(mul, $xs, 2);
 
-// Divide 2 by each x. (we also have rsub, rmod)
+// Divide 2 by each x. (we also have rsub, rmod, radd, etc)
 $ys: lst-map(rdiv, $xs, 2);
 
 // Convoluted equivalent of rdiv.
-// Pipes can be used to mimic many forms of functional composition.
+// Pipes can be used to mimic many forms of functional composition, but the
+// resulting code is often ugly
 $ys: lst-map(pipe-2, $xs, flip, div);
+
+// Of course you can use map, filter, reduce with your own functions
+@function fib($n) {
+    @return if($n <= 2, 1, fib($n - 1) + fib($n - 2));
+}
+$ys: lst-map(fib, lst-range(1, 30));
 ```
 
 
