@@ -1,3 +1,6 @@
+> [!WARNING]
+> **This project is no longer maintained.** Its functionality has been superseded by [Tailwind CSS](https://tailwindcss.com) and modern CSS features (custom properties, nesting, container queries).
+
 # fn.sass - functional programming in Sass
 
 [![Travis Status](https://travis-ci.org/fabiommendes/fn.sass.svg?branch=master)](https://travis-ci.org/fabiommendes/fn.sass?branch=master)
